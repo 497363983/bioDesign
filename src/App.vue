@@ -12,9 +12,10 @@ const contentHeight = computed(() => height - 60);
     <el-header ref="header" class="header-menu-wrap">
       <el-menu mode="horizontal" :ellipsis="false" router>
         <el-menu-item class="brand">
-          <span><strong>生物创新设计大赛</strong></span>
+          <span style="font-size: 20px;"><strong>生物创新设计大赛</strong></span>
         </el-menu-item>
         <div class="flex-grow"></div>
+        <el-menu-item index="upload">上传通道</el-menu-item>
         <el-menu-item index="about">关于</el-menu-item>
         <li
           class="el-menu-item add-item"
