@@ -16,6 +16,10 @@ const routes = [
     {
         path: '/about',
         component: () => import('@/views/about.vue')
+    },
+    {
+        path: '/timeline',
+        component: () => import('@/views/timeline.vue')
     }
 ]
 

@@ -10,12 +10,13 @@ const contentHeight = computed(() => height - 60);
 <template>
   <el-container class="container" style="height: 100%">
     <el-header ref="header" class="header-menu-wrap">
-      <el-menu mode="horizontal" :ellipsis="false" router>
+      <el-menu mode="horizontal" :ellipsis="true" router>
         <el-menu-item class="brand">
-          <span style="font-size: 20px;"><strong>生物创新设计大赛</strong></span>
+          <span style="font-size: 20px"><strong>生物创新设计大赛</strong></span>
         </el-menu-item>
         <div class="flex-grow"></div>
         <el-menu-item index="upload">上传通道</el-menu-item>
+        <el-menu-item index="timeline">比赛日程</el-menu-item>
         <el-menu-item index="about">关于</el-menu-item>
         <li
           class="el-menu-item add-item"
@@ -30,7 +31,19 @@ const contentHeight = computed(() => height - 60);
         <el-main>
           <router-view></router-view>
         </el-main>
-        <el-footer></el-footer>
+        <el-footer style="background-color: var(--el-bg-color-page)">
+          <div></div>
+          <div class="text-center">
+            ©Content on this site is licensed under a
+            <el-link
+              style="font-weight: 700; font-size: 17px"
+              target="_bank"
+              href="https://github.com/497363983/bioDesign/blob/main/LICENSE"
+              >MIT</el-link
+            >
+            license
+          </div>
+        </el-footer>
       </el-container>
     </el-scrollbar>
   </el-container>
@@ -47,7 +60,6 @@ const contentHeight = computed(() => height - 60);
       position: relative;
     }
     .add-item {
-      padding: 5px 10px;
       &:hover {
         background-color: transparent;
       }

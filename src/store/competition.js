@@ -2,7 +2,11 @@ import { defineStore } from 'pinia'
 
 export const useCompetitionStore = defineStore('competition', {
     state: () => ({
-        uploadTime: "",
-        
+        upload: {
+            start: "",
+            end: "",
+            open: false
+        },
+
     })
 })
