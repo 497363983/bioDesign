@@ -38,5 +38,19 @@ export default defineConfig({
       '@': resolve(__dirname, 'src')
     }
   },
-  base: './'
+  optimizeDeps: {
+    include: ['axios'],
+  },
+  base: './',
+  server: {
+    cors: true,
+    port: 3000,
+    proxy: {
+      '^/api': {
+        target: 'https://qww123.ltd',
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  }
 })

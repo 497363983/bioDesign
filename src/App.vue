@@ -17,6 +17,12 @@ const contentHeight = computed(() => height - 60);
         <div class="flex-grow"></div>
         <el-menu-item index="upload">上传通道</el-menu-item>
         <el-menu-item index="timeline">比赛日程</el-menu-item>
+        <!-- <li
+          class="el-menu-item add-item"
+          style="height: var(--el-menu-item-height)"
+        >
+          user
+        </li> -->
         <el-menu-item index="about">关于</el-menu-item>
         <li
           class="el-menu-item add-item"
