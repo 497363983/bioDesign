@@ -30,12 +30,12 @@ async function tabChange(name) {
           <notice></notice>
         </el-scrollbar>
       </el-tab-pane>
-      <el-tab-pane label="常见问题" name="questions">
+      <el-tab-pane  style="height: 100%" label="常见问题" name="questions">
         <el-scrollbar height="100%">
           <questions :questions="questionList"></questions>
         </el-scrollbar>
       </el-tab-pane>
-      <el-tab-pane label="Bug反馈" name="bug">
+      <el-tab-pane  style="height: 100%" label="Bug反馈" name="bug">
         <el-scrollbar height="100%">
           <bug></bug>
         </el-scrollbar>

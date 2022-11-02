@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, { Axios } from "axios"
 import { ElMessage } from "element-plus"
 import { useUserStore } from "@/store"
 // import QS from "qs"
@@ -9,7 +9,7 @@ axios.defaults.timeout = 10000
 axios.interceptors.request.use(
     config => {
         // if (useUserStore().isLogin) {
-            return config
+        return config
         // }
     },
     error => {
@@ -18,6 +18,12 @@ axios.interceptors.request.use(
 )
 
 export const request = {
+    /**
+     * 
+     * @param {String} url 
+     * @param {import("axios").AxiosRequestConfig} params 
+     * @returns {Promise}
+     */
     get: (url, params) => new Promise((resolve, reject) => {
         axios.get(url, {
             params
@@ -27,6 +33,13 @@ export const request = {
             reject(err)
         })
     }),
+
+    /**
+     * 
+     * @param {String} url 
+     * @param {Axios | undefined} params 
+     * @returns 
+     */
     post: (url, params) => new Promise((resolve, reject) => {
         axios.post(url, params).then(
             res => {
