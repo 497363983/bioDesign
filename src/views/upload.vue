@@ -14,6 +14,9 @@ import { useCompetitionStore } from "../store/competition";
         </template>
       </counter>
     </div>
+    <div>
+      <el-button type="primary">阅读</el-button>
+    </div>
   </div>
   <div v-else></div>
 </template>
@@ -32,5 +35,6 @@ import { useCompetitionStore } from "../store/competition";
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 </style>

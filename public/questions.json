@@ -1,0 +1,10 @@
+[
+    {
+        "question": "如何将word文件转为PDF文件？",
+        "answer": "可以使用该<a class=\"el-link el-link--primary is-underline\" href=\"https://smallpdf.com/cn/word-to-pdf\" target=\"_bank\" data-v-027efdb7=\"\"><i class=\"el-icon\"><svg viewBox=\"0 0 1024 1024\" xmlns=\"http://www.w3.org/2000/svg\"><path fill=\"currentColor\" d=\"M764.416 254.72a351.68 351.68 0 0 1 86.336 149.184H960v192.064H850.752a351.68 351.68 0 0 1-86.336 149.312l54.72 94.72-166.272 96-54.592-94.72a352.64 352.64 0 0 1-172.48 0L371.136 936l-166.272-96 54.72-94.72a351.68 351.68 0 0 1-86.336-149.312H64v-192h109.248a351.68 351.68 0 0 1 86.336-149.312L204.8 160l166.208-96h.192l54.656 94.592a352.64 352.64 0 0 1 172.48 0L652.8 64h.128L819.2 160l-54.72 94.72zM704 499.968a192 192 0 1 0-384 0 192 192 0 0 0 384 0z\"></path></svg></i><span class=\"el-link__inner\"><strong data-v-027efdb7=\"\">在线工具</strong></span></a>将word文档转换为PDF文件"
+    },
+    {
+        "question": "账号是什么？",
+        "answer": "账号是你的学号"
+    }
+]

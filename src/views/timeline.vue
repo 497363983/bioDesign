@@ -29,8 +29,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div style="min-height: calc(100vh - 100px)">
-    <el-timeline v-loading="loading" :reverse="true">
+  <div  v-loading="loading" style="min-height: calc(100vh - 100px);position:relative;">
+    <el-timeline style="min-height: 100%;display: block;" :reverse="true">
       <el-timeline-item
         v-for="(activity, index) in timeline"
         :key="index"
