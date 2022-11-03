@@ -24,6 +24,7 @@ function isHappening(activity) {
 }
 onMounted(async () => {
   timeline.value = await getTimeline();
+  console.log(timeline.value)
   loading.value = false;
 });
 </script>
