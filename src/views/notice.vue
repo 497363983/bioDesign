@@ -36,14 +36,6 @@ import { Message, Calendar, Tools, Search } from "@element-plus/icons-vue";
         >
       </p>
       <h2>六、项目申报</h2>
-      <el-alert
-        title="注意"
-        type="warning"
-        description="上传的项目之后可能会需要被用作学院其他竞赛的基础项目，项目上传即视为知情并同意。"
-        :closable="false"
-        show-icon
-      >
-      </el-alert>
       <p>
         请参赛者填写《生物工程学院生物创新设计大赛申请表》、《生物工程学院生物创新设计大赛汇总表》，并附上设计方案于
         <strong>11 月 20日晚20:00前（暂定）</strong>将电子稿发至
