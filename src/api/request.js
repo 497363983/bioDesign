@@ -18,9 +18,8 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
     response => {
-        console.log(response);
         if(response.status === 200){
-            return Promise.resolve(response.data.data);
+            return Promise.resolve(response);
         }else{
             return Promise.reject(response);
         }

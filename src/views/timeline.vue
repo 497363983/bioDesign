@@ -23,7 +23,7 @@ function isHappening(activity) {
   }
 }
 onMounted(async () => {
-  timeline.value = await getTimeline();
+  timeline.value = (await getTimeline()).data;
   console.log(timeline.value)
   loading.value = false;
 });
