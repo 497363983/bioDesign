@@ -1,6 +1,11 @@
 <script setup>
 import counter from "@/components/counter/index.vue";
 import { useCompetitionStore } from "../store/competition";
+import { getJSON } from "@/api";
+
+onMounted(() => {
+
+});
 </script>
 
 <template>

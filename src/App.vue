@@ -15,6 +15,7 @@ const contentHeight = computed(() => height - 60);
           <span style="font-size: 20px"><strong>生物创新设计大赛</strong></span>
         </el-menu-item>
         <div class="flex-grow"></div>
+        <el-menu-item index="/">首页</el-menu-item>
         <el-menu-item index="upload">上传通道</el-menu-item>
         <el-menu-item index="timeline">比赛日程</el-menu-item>
         <!-- <li

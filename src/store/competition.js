@@ -7,6 +7,8 @@ export const useCompetitionStore = defineStore('competition', {
             end: "",
             open: false
         },
-
+        result: {
+            open: false
+        }
     })
 })

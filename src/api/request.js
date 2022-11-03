@@ -1,7 +1,6 @@
 import axios, { Axios } from "axios"
 import { ElMessage } from "element-plus"
 import { useUserStore } from "@/store"
-// import QS from "qs"
 
 axios.defaults.baseURL = "https://qww123.ltd/bioDesign/"
 axios.defaults.timeout = 10000
@@ -14,6 +13,25 @@ axios.interceptors.request.use(
     },
     error => {
         return Promise.error(error)
+    }
+)
+
+axios.interceptors.response.use(
+    response => {
+        if(response.status === 200){
+            return Promise.resolve(response);
+        }else{
+            return Promise.reject(response);
+        }
+    },
+    error =>{
+        console.log(error)
+        if(error.response.status) {
+            ElMessage({
+                message: error.response.message,
+                type: "error"
+            })
+        }
     }
 )
 

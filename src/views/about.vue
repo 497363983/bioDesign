@@ -2,16 +2,16 @@
 import notice from "./notice.vue";
 import questions from "./questions.vue";
 import bug from "./bug.vue";
-import { getJSON } from "@/api";
+import { getQuestions } from "@/api";
 const questionList = ref([]);
 const tab = ref("notice");
 
-async function getQuestions() {
-  questionList.value = await getJSON("questions.json");
+async function get_questions() {
+  questionList.value = (await getQuestions()).data;
 }
 async function tabChange(name) {
   if (name === "questions") {
-    await getQuestions();
+    await get_questions();
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <script setup>
 import counter from "@/components/counter/index.vue";
-import { getJSON } from "@/api";
+import { getTimeline } from "@/api";
 import { MapLocation, Clock, Check } from "@element-plus/icons-vue";
 import { useTimeAgo, useTimestamp } from "@vueuse/core";
 const timeline = ref([]);
@@ -23,7 +23,8 @@ function isHappening(activity) {
   }
 }
 onMounted(async () => {
-  timeline.value = await getJSON("timeline.json");
+  timeline.value = (await getTimeline()).data;
+  console.log(timeline.value)
   loading.value = false;
 });
 </script>
