@@ -18,15 +18,16 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
     response => {
-        if(response.status === 200){
+        console.log(response)
+        if (response.status === 200) {
             return Promise.resolve(response);
-        }else{
+        } else {
             return Promise.reject(response);
         }
     },
-    error =>{
+    error => {
         console.log(error)
-        if(error.response.status) {
+        if (error.response.status) {
             ElMessage({
                 message: error.response.data.message,
                 type: "error"
