@@ -36,7 +36,7 @@ export const login = (username, password, timestamp) => {
         useUserStore().grade = res.grade;
         useUserStore().name = res.name;
         useUserStore().role = res.role;
-        useUserStore().team = rea.team;
+        useUserStore().team = res.team;
         useUserStore().isAuthenticated = true;
         console.log(useUserStore())
     })
