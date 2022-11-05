@@ -23,7 +23,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
         console.log(response)
-        if(res.data && res.data.code != 0){
+        if(response.data && response.data.code != 0){
             ElMessage({
                 type: "error",
                 message: response.data.message
