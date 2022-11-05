@@ -1,11 +1,11 @@
 import { createPinia } from "pinia"
 import { useUserStore } from "./user"
-import { useCompetitionStore } from "./competition"
+import { useConfigStore } from "./config"
 
 const pinia = createPinia()
 
 export {
     pinia,
     useUserStore,
-    useCompetitionStore
+    useConfigStore
 }

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useCompetitionStore = defineStore('competition', {
+export const useConfigStore = defineStore('config', {
     state: () => ({
         upload: {
             start: "",
@@ -8,6 +8,13 @@ export const useCompetitionStore = defineStore('competition', {
             open: false
         },
         result: {
+            start: "",
+            end: "",
+            open: false
+        },
+        competition: {
+            start: "",
+            end: "",
             open: false
         }
     })

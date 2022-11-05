@@ -1,6 +1,5 @@
 <script setup>
 import { useTimestamp } from "@vueuse/core";
-import { max } from "lodash";
 
 const props = defineProps({
   end: {

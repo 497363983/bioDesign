@@ -1,14 +1,17 @@
 <script setup>
 import counter from "@/components/counter/index.vue";
-import { useCompetitionStore } from "../store/competition";
+import { useConfigStore } from "../store/config";
+import { isOpen } from "@/utils";
+
+const canUpload = isOpen(useConfigStore().upload)
 
 onMounted(() => {
-
+  console.log(canUpload);
 });
 </script>
 
 <template>
-  <div class="time-counter" v-if="!useCompetitionStore().upload.open">
+  <div class="time-counter" v-if="!canUpload">
     <div class="counter-wrap text-center">
       <counter end="2022-11-07 23:00:00">
         <template v-slot="{ day, second, hour, minute }">

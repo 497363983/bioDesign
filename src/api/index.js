@@ -1,5 +1,6 @@
 import { request } from "./request";
 import { MD5 } from "crypto-js";
+import { token } from "../utils";
 
 /**
  * 
@@ -27,5 +28,12 @@ export const login = (username, password, timestamp) => {
         username,
         password: MD5(password).toString(),
         timestamp
+    }).then(res => {
+        token.value = res.token;
+        useUserStore().college = res.data.college;
+        useUserStore().grade = res.data.grade;
+        useUserStore().name = res.data.name;
+        useUserStore().role = res.data.role;
+        useUserStore().team = rea.data.team;
     })
 }

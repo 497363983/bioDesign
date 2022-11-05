@@ -1,7 +1,7 @@
 <script setup>
 import { useUserStore } from "@/store";
 import { login } from "@/api";
-import { useTimestamp } from "@vueuse/core";
+import { useTimestamp, useStorage } from "@vueuse/core";
 
 const timestamp = useTimestamp({ offset: 0 });
 
@@ -21,6 +21,15 @@ const rules = reactive({
     },
   ],
 });
+
+async function onLogin() {
+  const res = await login(
+    useUserStore().username,
+    useUserStore().password,
+    timestamp.value
+  );
+
+}
 </script>
 
 <template>
@@ -48,17 +57,7 @@ const rules = reactive({
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button
-          type="primary"
-          @click="
-            login(
-              useUserStore().username,
-              useUserStore().password,
-              timestamp
-            )
-          "
-          >登录</el-button
-        >
+        <el-button type="primary" @click="onLogin">登录</el-button>
         <el-button type="default">注册</el-button>
       </el-form-item>
     </el-form>

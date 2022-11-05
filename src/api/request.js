@@ -1,15 +1,18 @@
 import axios, { Axios } from "axios"
 import { ElMessage } from "element-plus"
-import { useUserStore } from "@/store"
+import { token } from "../utils";
+
 
 axios.defaults.baseURL = "https://qww123.ltd/bioDesign/"
 axios.defaults.timeout = 10000
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 axios.interceptors.request.use(
     config => {
-        // if (useUserStore().isLogin) {
+        if (config.method === "post" && token.value && typeof window !== "undefined") {
+            config.headers.token = token.value;
+        }
+        console.log(config)
         return config
-        // }
     },
     error => {
         return Promise.error(error)
@@ -20,7 +23,7 @@ axios.interceptors.response.use(
     response => {
         console.log(response)
         if (response.status === 200) {
-            return Promise.resolve(response);
+            return response.data;
         } else {
             return Promise.reject(response);
         }

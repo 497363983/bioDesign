@@ -7,7 +7,7 @@ const questionList = ref([]);
 const tab = ref("notice");
 
 async function get_questions() {
-  questionList.value = (await getQuestions()).data;
+  questionList.value = await getQuestions();
 }
 async function tabChange(name) {
   if (name === "questions") {
