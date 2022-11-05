@@ -36,6 +36,8 @@ async function onLogin(formRef) {
           useUserStore().role === "player"
         ) {
           router.push("/upload");
+        } else {
+          // router.push("/upload");
         }
         loginLoading.value = false;
       });

@@ -1,6 +1,6 @@
 <script setup>
 import { useUserStore } from "@/store";
-import { login } from "@/api";
+import { registry } from "@/api";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -33,8 +33,18 @@ const colleges = ref([
   "继续教育学院",
 ]);
 
-const loginLoading = ref(false);
-const loginForm = ref();
+const registryLoading = ref(false);
+const registerForm = ref();
+
+function validate_re_password(rule, value, callback) {
+  if (value === "") {
+    callback(new Error("请再次输入密码"));
+  } else if (value !== useUserStore().password) {
+    callback(new Error("请与第一次保持一致"));
+  } else {
+    callback();
+  }
+}
 
 const rules = reactive({
   username: [
@@ -56,11 +66,15 @@ const rules = reactive({
       message: "密码不能为空",
       trigger: "blur",
     },
+    {
+      min: 8,
+      max: 16,
+      message: "密码长度在8~16位之间",
+    },
   ],
   re_password: [
     {
-      required: true,
-      message: "请再次输入密码",
+      validator: validate_re_password,
       trigger: "blur",
     },
   ],
@@ -86,18 +100,31 @@ const rules = reactive({
     },
   ],
 });
+
+function onRegistry(formRef) {
+  if (!formRef) return;
+  registryLoading.value = true;
+  formRef.validate(async (valid) => {
+    if (valid) {
+      registry(() => {
+        router.replace("/login");
+      });
+    }
+    registryLoading.value = false;
+  });
+}
 </script>
 
 <template>
   <div style="min-height: calc(100vh - 100px); position: relative">
     <el-form
-      ref="loginForm"
+      ref="registerForm"
       style="width: 50%; padding: 20px; margin: auto"
       :model="useUserStore()"
       label-position="top"
       :rules="rules"
       status-icon
-      :disabled="loginLoading"
+      :disabled="registryLoading"
     >
       <el-form-item>
         <div style="display: block; width: 100%">
@@ -114,6 +141,18 @@ const rules = reactive({
           show-password
         ></el-input>
       </el-form-item>
+      <!-- <el-space fill>
+        <el-alert title="密码要求" type="info" show-icon :closable="false">
+          <div>
+            <ul>
+              <li>密码长度在8~16位之间</li>
+              <li>密码必须包含大小写字母</li>
+              <li>密码必须包含数字</li>
+              <li></li>
+            </ul>
+          </div>
+        </el-alert>
+      </el-space> -->
       <el-form-item label="再次输入密码" prop="re_password">
         <el-input
           v-model="useUserStore().re_password"
@@ -138,11 +177,13 @@ const rules = reactive({
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary">注册</el-button>
         <el-button
-          type="default"
-          @click="router.replace('/login')"
-          :loading="loginLoading"
+          type="primary"
+          :loading="registryLoading"
+          @click="onRegistry(registerForm)"
+          >注册</el-button
+        >
+        <el-button type="default" @click="router.replace('/login')"
           >登录</el-button
         >
       </el-form-item>

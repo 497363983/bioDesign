@@ -61,12 +61,32 @@ export const login = async (callback) => {
 }
 
 
-export const isLogin = () => {
+export const isLogin = (callback) => {
     request.post('/api/isLogin.php', {
         username: useUserStore().username,
         timestamp: timestamp.value
     }).then(res => {
         console.log(res);
 
+    })
+}
+
+export const registry = () => {
+    request.post('/api/signup.php', {
+        username: useUserStore().username,
+        password: MD5(useUserStore().password).toString(),
+        timestamp: timestamp.value,
+        name: useUserStore().name,
+        college: useUserStore().college,
+        grade: useUserStore().grade,
+        role: 'player'
+    }).then(res => {
+        if (res) {
+            ElMessage({
+                type: "success",
+                message: "注册成功",
+            });
+            callback && typeof callback === "function" ? callback() : null
+        }
     })
 }
