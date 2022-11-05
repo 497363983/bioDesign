@@ -1,7 +1,9 @@
 import { request } from "./request";
 import { MD5 } from "crypto-js";
-import { token } from "../utils";
+import { token, timestamp } from "../utils";
 import { useUserStore } from "../store";
+import { ElMessage } from "element-plus";
+import { storeToRefs } from "pinia";
 
 /**
  * 
@@ -22,13 +24,17 @@ export const getQuestions = () => request.get('/api/questions.php');
  */
 export const getConfig = (config) => request.get('/api/getConfig.php', { config });
 
-
-export const login = (username, password, timestamp) => {
-    console.log(MD5(password).toString(), timestamp)
-    request.post('/api/login.php', {
-        username,
-        password: MD5(password).toString(),
-        timestamp
+/**
+ * 
+ * @param {String} username 
+ * @param {String} password 
+ * @param {Number} timestamp 
+ */
+export const login = async () => {
+    return request.post('/api/login.php', {
+        username: useUserStore().username,
+        password: MD5(useUserStore().password).toString(),
+        timestamp: timestamp.value
     }).then(res => {
         console.log(res)
         token.value = res.token;
@@ -39,5 +45,15 @@ export const login = (username, password, timestamp) => {
         useUserStore().team = res.team;
         useUserStore().isAuthenticated = true;
         console.log(useUserStore())
+        ElMessage({
+            type: "success",
+            message: "登陆成功",
+        });
+    }).catch(err =>{
+        console.log(err)
+        // ElMessage({
+        //     type: "error",
+        //     message: err.message,
+        // });
     })
 }

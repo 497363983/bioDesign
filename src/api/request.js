@@ -9,6 +9,7 @@ axios.defaults.timeout = 10000
 axios.interceptors.request.use(
     config => {
         if (config.method === "post" && token.value && typeof window !== "undefined") {
+            console.log(token.value);
             config.headers.token = token.value;
         }
         console.log(config)
@@ -22,20 +23,17 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
         console.log(response)
-        if (response.status === 200) {
-            return response.data;
-        } else {
-            return Promise.reject(response);
+        if(res.data && res.data.code != 0){
+            ElMessage({
+                type: "error",
+                message: response.data.message
+            });
+            return Promise.reject(response.data);
         }
+        return response.data;
     },
     error => {
-        console.log(error)
-        if (error.response.status) {
-            ElMessage({
-                message: error.response.data.message,
-                type: "error"
-            })
-        }
+        console.log(error);
     }
 )
 

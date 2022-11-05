@@ -1,10 +1,11 @@
 <script setup>
 import { useUserStore } from "@/store";
 import { login } from "@/api";
-import { useTimestamp } from "@vueuse/core";
+import { ElMessage } from "element-plus";
+import { router } from "../router";
 
-const timestamp = useTimestamp({ offset: 0 });
 const loginLoading = ref(false);
+const loginForm = ref();
 
 const rules = reactive({
   username: [
@@ -23,20 +24,25 @@ const rules = reactive({
   ],
 });
 
-async function onLogin() {
-  const res = await login(
-    useUserStore().username,
-    useUserStore().password,
-    timestamp.value
-  );
-  console.log()
-
+async function onLogin(formRef) {
+  if (!formRef) return;
+  loginLoading.value = true;
+  formRef.validate(async (valid) => {
+    if (valid) {
+      await login();
+      if (useUserStore().isAuthenticated) {
+        router.push("/upload");
+      }
+      loginLoading.value = false;
+    }
+  });
 }
 </script>
 
 <template>
   <div style="min-height: calc(100vh - 100px); position: relative">
     <el-form
+      ref="loginForm"
       style="width: 50%; padding: 20px"
       :model="useUserStore()"
       label-position="top"
@@ -60,7 +66,9 @@ async function onLogin() {
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onLogin">登录</el-button>
+        <el-button type="primary" @click="onLogin(loginForm)" :loading="loginLoading"
+          >登录</el-button
+        >
         <el-button type="default">注册</el-button>
       </el-form-item>
     </el-form>
