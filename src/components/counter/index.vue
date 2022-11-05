@@ -1,9 +1,14 @@
 <script setup>
 import { useTimestamp } from "@vueuse/core";
+import { watchEffect } from "vue";
 
 const props = defineProps({
   end: {
     type: [String],
+  },
+  endCallback: {
+    type: [Function, null],
+    default: null,
   },
 });
 
@@ -16,6 +21,18 @@ const d = computed(() => Math.max(parseInt(diff.value / 86400), 0));
 const h = computed(() =>
   Math.max(parseInt(diff.value / 3600) - 24 * d.value, 0)
 );
+
+// watch(
+//   () => time.value,
+//   () => {
+//     console.log(time.value)
+//     props.endCallback && time.value <= 0 ? endCallback() : null;
+//   }
+// );
+
+watchEffect(() => {
+  props.endCallback && time.value <= 0 ? endCallback() : null;
+});
 </script>
 
 <template>

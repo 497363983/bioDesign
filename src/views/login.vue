@@ -1,9 +1,10 @@
 <script setup>
 import { useUserStore } from "@/store";
 import { login } from "@/api";
-import { useTimestamp, useStorage } from "@vueuse/core";
+import { useTimestamp } from "@vueuse/core";
 
 const timestamp = useTimestamp({ offset: 0 });
+const loginLoading = ref(false);
 
 const rules = reactive({
   username: [
@@ -28,6 +29,7 @@ async function onLogin() {
     useUserStore().password,
     timestamp.value
   );
+  console.log()
 
 }
 </script>
@@ -40,6 +42,7 @@ async function onLogin() {
       label-position="top"
       :rules="rules"
       status-icon
+      :disabled="loginLoading"
     >
       <el-form-item>
         <div style="display: block; width: 100%">

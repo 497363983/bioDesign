@@ -10,4 +10,4 @@ import 'element-plus/theme-chalk/dark/css-vars.css'
 
 pinia.use(init())
 const app = createApp(App)
-app.use(ElementPlus).use(router).use(pinia).use(Particles).mount('#app')
+app.use(pinia).use(ElementPlus).use(router).use(Particles).mount('#app')

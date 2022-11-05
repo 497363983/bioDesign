@@ -1,28 +1,44 @@
 <script setup>
 import counter from "@/components/counter/index.vue";
 import { useConfigStore } from "../store/config";
-import { isOpen } from "@/utils";
+import { timestamp } from "@/utils";
+import { nextTick } from "vue";
+import { getConfig } from "@/api";
 
-const canUpload = isOpen(useConfigStore().upload)
+const canUpload = computed(() => {
+  if (!useConfigStore().upload.open) {
+    return false;
+  } else if (useConfigStore().upload.open === "auto") {
+    const start = useConfigStore().upload.start;
+    const end = useConfigStore().upload.end;
+    const pre = new Date(timestamp.value) - new Date(start);
+    const ne = new Date(timestamp.value) - new Date(end);
+    return pre >= 0 && ne <= 0;
+    // return pre
+  } else {
+    return true;
+  }
+});
 
-onMounted(() => {
-  console.log(canUpload);
+onMounted(async () => {
+  useConfigStore().upload = await getConfig("upload");
+  nextTick(() => {
+    console.log(canUpload);
+    console.log(useConfigStore().upload.open);
+  });
 });
 </script>
 
 <template>
   <div class="time-counter" v-if="!canUpload">
     <div class="counter-wrap text-center">
-      <counter end="2022-11-07 23:00:00">
+      <counter :end="useConfigStore().upload.start">
         <template v-slot="{ day, second, hour, minute }">
           <span class="info-text">上传通道预计将于</span>
           {{ day }}天{{ hour }}时{{ minute }}分{{ second }}秒
           <span class="info-text">后开放</span>
         </template>
       </counter>
-    </div>
-    <div>
-      <el-button type="primary">阅读</el-button>
     </div>
   </div>
   <div v-else></div>
