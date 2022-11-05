@@ -31,7 +31,7 @@ export const getConfig = (config) => request.get('/api/getConfig.php', { config 
  * @param {Number} timestamp 
  */
 export const login = async () => {
-    return request.post('/api/login.php', {
+    request.post('/api/login.php', {
         username: useUserStore().username,
         password: MD5(useUserStore().password).toString(),
         timestamp: timestamp.value
@@ -50,10 +50,9 @@ export const login = async () => {
             message: "登陆成功",
         });
     }).catch(err =>{
-        console.log(err)
-        // ElMessage({
-        //     type: "error",
-        //     message: err.message,
-        // });
+        ElMessage({
+            type: "error",
+            message: "err.message",
+        });
     })
 }
