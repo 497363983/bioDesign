@@ -9,6 +9,8 @@ export const useUserStore = defineStore('user', {
         role: "",
         team: "",
         token: useStorage('token', null),
-        isAuthenticated: false
+        isAuthenticated: false,
+        college: "",
+        grade: "",
     })
 })

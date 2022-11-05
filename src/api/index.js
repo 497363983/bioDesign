@@ -30,12 +30,14 @@ export const login = (username, password, timestamp) => {
         password: MD5(password).toString(),
         timestamp
     }).then(res => {
+        console.log(res)
         token.value = res.token;
         useUserStore().college = res.data.college;
         useUserStore().grade = res.data.grade;
         useUserStore().name = res.data.name;
         useUserStore().role = res.data.role;
         useUserStore().team = rea.data.team;
+        useUserStore().isAuthenticated = true;
         console.log(useUserStore())
     })
 }
