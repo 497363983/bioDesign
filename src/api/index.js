@@ -3,8 +3,6 @@ import { MD5 } from "crypto-js";
 import { token, timestamp } from "../utils";
 import { useUserStore } from "../store";
 import { ElMessage } from "element-plus";
-import { storeToRefs } from "pinia";
-import { ca } from "element-plus/es/locale";
 
 /**
  * 
