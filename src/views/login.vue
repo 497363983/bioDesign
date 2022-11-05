@@ -1,8 +1,9 @@
 <script setup>
 import { useUserStore } from "@/store";
 import { login } from "@/api";
-import { ElMessage } from "element-plus";
-import { router } from "../router";
+import { useRouter } from "vue-router";
+
+const router = useRouter()
 
 const loginLoading = ref(false);
 const loginForm = ref();
@@ -66,7 +67,10 @@ async function onLogin(formRef) {
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onLogin(loginForm)" :loading="loginLoading"
+        <el-button
+          type="primary"
+          @click="onLogin(loginForm)"
+          :loading="loginLoading"
           >登录</el-button
         >
         <el-button type="default">注册</el-button>

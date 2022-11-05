@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+
 const routes = [
     {
         path: '/',
@@ -23,7 +24,14 @@ const routes = [
     },
     {
         path: '/login',
-        component: () => import('@/views/login.vue')
+        component: () => import('@/views/login.vue'),
+        beforeEnter: (to, from, next) => {
+            next()
+        }
+    },
+    {
+        path: '/register',
+        component: () => import('@/views/register.vue')
     }
 ]
 

@@ -34,6 +34,11 @@ axios.interceptors.response.use(
     },
     error => {
         console.log(error);
+        ElMessage({
+            type: "error",
+            message: 'err'
+        });
+        return Promise.reject(error);
     }
 )
 

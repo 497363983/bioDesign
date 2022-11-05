@@ -45,14 +45,25 @@ export const login = async () => {
         useUserStore().team = res.team;
         useUserStore().isAuthenticated = true;
         console.log(useUserStore())
-        ElMessage({
-            type: "success",
-            message: "登陆成功",
-        });
+        // ElMessage({
+        //     type: "success",
+        //     message: "登陆成功",
+        // });
     }).catch(err =>{
-        ElMessage({
-            type: "error",
-            message: "err.message",
-        });
+        console.log(err)
+        // ElMessage({
+        //     type: "error",
+        //     message: "err.message",
+        // });
+    })
+}
+
+
+export const isLogin = () =>{
+    request.post('/api/isLogin.php',{
+        username: useUserStore().username,
+        timestamp: timestamp.value
+    }).then(res => {
+
     })
 }
