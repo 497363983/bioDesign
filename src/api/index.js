@@ -64,6 +64,7 @@ export const isLogin = () =>{
         username: useUserStore().username,
         timestamp: timestamp.value
     }).then(res => {
-
+        console.log(res);
+        
     })
 }

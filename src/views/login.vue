@@ -3,7 +3,7 @@ import { useUserStore } from "@/store";
 import { login } from "@/api";
 import { useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
 
 const loginLoading = ref(false);
 const loginForm = ref();
@@ -30,11 +30,15 @@ async function onLogin(formRef) {
   loginLoading.value = true;
   formRef.validate(async (valid) => {
     if (valid) {
-      await login();
-      if (useUserStore().isAuthenticated) {
-        router.push("/upload");
-      }
-      loginLoading.value = false;
+      login().then(() => {
+        if (
+          useUserStore().isAuthenticated &&
+          useUserStore().role === "player"
+        ) {
+          router.push("/upload");
+        }
+        loginLoading.value = false;
+      });
     }
   });
 }
