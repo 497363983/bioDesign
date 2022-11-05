@@ -42,13 +42,17 @@ async function onLogin(formRef) {
     }
   });
 }
+
+function registry() {
+  router.replace("/register");
+}
 </script>
 
 <template>
   <div style="min-height: calc(100vh - 100px); position: relative">
     <el-form
       ref="loginForm"
-      style="width: 50%; padding: 20px"
+      style="width: 50%; padding: 20px; margin: auto"
       :model="useUserStore()"
       label-position="top"
       :rules="rules"
@@ -77,7 +81,7 @@ async function onLogin(formRef) {
           :loading="loginLoading"
           >登录</el-button
         >
-        <el-button type="default">注册</el-button>
+        <el-button type="default" @click="registry">注册</el-button>
       </el-form-item>
     </el-form>
   </div>
