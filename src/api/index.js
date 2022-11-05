@@ -37,19 +37,21 @@ export const login = async () => {
         timestamp: timestamp.value
     }).then(res => {
         console.log(res)
-        token.value = res.token;
-        useUserStore().college = res.college;
-        useUserStore().grade = res.grade;
-        useUserStore().name = res.name;
-        useUserStore().role = res.role;
-        useUserStore().team = res.team;
-        useUserStore().isAuthenticated = true;
-        console.log(useUserStore())
-        // ElMessage({
-        //     type: "success",
-        //     message: "登陆成功",
-        // });
-    }).catch(err =>{
+        if (res) {
+            token.value = res.token;
+            useUserStore().college = res.college;
+            useUserStore().grade = res.grade;
+            useUserStore().name = res.name;
+            useUserStore().role = res.role;
+            useUserStore().team = res.team;
+            useUserStore().isAuthenticated = true;
+            console.log(useUserStore())
+            ElMessage({
+                type: "success",
+                message: "登陆成功",
+            });
+        }
+    }).catch(err => {
         console.log(err)
         // ElMessage({
         //     type: "error",
@@ -59,12 +61,12 @@ export const login = async () => {
 }
 
 
-export const isLogin = () =>{
-    request.post('/api/isLogin.php',{
+export const isLogin = () => {
+    request.post('/api/isLogin.php', {
         username: useUserStore().username,
         timestamp: timestamp.value
     }).then(res => {
         console.log(res);
-        
+
     })
 }
