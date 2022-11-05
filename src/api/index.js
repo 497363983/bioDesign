@@ -4,6 +4,7 @@ import { token, timestamp } from "../utils";
 import { useUserStore } from "../store";
 import { ElMessage } from "element-plus";
 import { storeToRefs } from "pinia";
+import { ca } from "element-plus/es/locale";
 
 /**
  * 
@@ -30,7 +31,7 @@ export const getConfig = (config) => request.get('/api/getConfig.php', { config 
  * @param {String} password 
  * @param {Number} timestamp 
  */
-export const login = async () => {
+export const login = async (callback) => {
     request.post('/api/login.php', {
         username: useUserStore().username,
         password: MD5(useUserStore().password).toString(),
@@ -50,6 +51,7 @@ export const login = async () => {
                 type: "success",
                 message: "登陆成功",
             });
+            callback && typeof callback === "function" ? callback() : null
         }
     }).catch(err => {
         console.log(err)

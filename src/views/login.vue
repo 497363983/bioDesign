@@ -30,7 +30,7 @@ async function onLogin(formRef) {
   loginLoading.value = true;
   formRef.validate(async (valid) => {
     if (valid) {
-      login().then(() => {
+      login(() => {
         if (
           useUserStore().isAuthenticated &&
           useUserStore().role === "player"
