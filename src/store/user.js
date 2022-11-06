@@ -6,7 +6,7 @@ export const useUserStore = defineStore('user', {
         name: "",
         password: "",
         re_password: "",
-        username: "",
+        username: useStorage('username', null),
         role: "",
         team: "",
         token: useStorage('token', null),

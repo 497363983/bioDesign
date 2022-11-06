@@ -4,6 +4,8 @@ import { computed } from "vue";
 
 export const token = useStorage('token', null);
 
+export const username = useStorage('username', null);
+
 export const timestamp = useTimestamp({ offset: 0 });
 
 export const isOpen = (config) => computed(() => {

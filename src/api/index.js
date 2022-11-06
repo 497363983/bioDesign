@@ -1,6 +1,6 @@
 import { request } from "./request";
 import { MD5 } from "crypto-js";
-import { token, timestamp } from "../utils";
+import { token, timestamp, username } from "../utils";
 import { useUserStore } from "../store";
 import { ElMessage } from "element-plus";
 
@@ -62,7 +62,7 @@ export const login = async (callback) => {
 
 export const isLogin = (callback) => {
     request.post('/api/isLogin.php', {
-        username: useUserStore().username,
+        username: username.value,
         timestamp: timestamp.value
     }).then(res => {
         if (res) {
