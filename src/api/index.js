@@ -74,6 +74,14 @@ export const isLogin = (callback) => {
             useUserStore().team = res.team;
             useUserStore().isAuthenticated = true;
             callback && typeof callback === "function" ? callback() : null;
+        } else {
+            token.value = null;
+            useUserStore().college = "";
+            useUserStore().grade = "";
+            useUserStore().name = "";
+            useUserStore().role = "";
+            useUserStore().team = "";
+            useUserStore().isAuthenticated = false;
         }
     })
 }

@@ -1,10 +1,18 @@
 <script setup>
 import themeButton from "@/components/theme-button/index.vue";
 import { useWindowSize } from "@vueuse/core";
+import { isLogin } from "@/api";
+import { token } from "./utils";
 
 const header = ref();
 const { height } = useWindowSize();
 const contentHeight = computed(() => height - 60);
+
+onMounted(() => {
+  if (token.value) {
+    isLogin();
+  }
+});
 </script>
 
 <template>
@@ -70,6 +78,23 @@ const contentHeight = computed(() => height - 60);
       &:hover {
         background-color: transparent;
       }
+    }
+    .add-list {
+        display: flex;
+        align-items: center;
+        height: var(--el-menu-item-height);
+        line-height: var(--el-menu-item-height);
+        font-size: var(--el-menu-item-font-size);
+        color: var(--el-menu-text-color);
+        padding: 0 var(--el-menu-base-level-padding);
+        list-style: none;
+        cursor: pointer;
+        position: relative;
+        transition: border-color var(--el-transition-duration),
+          background-color var(--el-transition-duration),
+          color var(--el-transition-duration);
+        box-sizing: border-box;
+        white-space: nowrap;
     }
     .flex-grow {
       flex-grow: 1;
