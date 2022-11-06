@@ -38,10 +38,10 @@ watchEffect(() => {
 <template>
   <span class="counter">
     <slot
-      :day="d.toString().padStart(2, '0')"
-      :hour="h.toString().padStart(2, '0')"
-      :minute="min.toString().padStart(2, '0')"
-      :second="s.toString().padStart(2, '0')"
+      :day="d.toString().padStart(2, '0') || 0"
+      :hour="h.toString().padStart(2, '0') || 0"
+      :minute="min.toString().padStart(2, '0') || 0"
+      :second="s.toString().padStart(2, '0') || 0"
     ></slot>
   </span>
 </template>

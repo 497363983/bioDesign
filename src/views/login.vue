@@ -35,6 +35,7 @@ async function onLogin(formRef) {
           useUserStore().isAuthenticated &&
           useUserStore().role === "player"
         ) {
+          console.log(useUserStore().isAuthenticated, useUserStore().role);
           router.push("/upload");
         } else {
           // router.push("/upload");
