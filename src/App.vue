@@ -3,6 +3,7 @@ import themeButton from "@/components/theme-button/index.vue";
 import { useWindowSize } from "@vueuse/core";
 import { isLogin } from "@/api";
 import { token, username } from "./utils";
+import { useUserStore } from "./store";
 
 const header = ref();
 const { height } = useWindowSize();
@@ -10,7 +11,10 @@ const contentHeight = computed(() => height - 60);
 
 onMounted(() => {
   if (token.value && username.value) {
-    isLogin();
+    isLogin((res)=>{
+      console.log(res);
+      console.log(useUserStore());
+    });
   }
 });
 </script>

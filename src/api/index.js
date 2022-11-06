@@ -73,7 +73,7 @@ export const isLogin = (callback) => {
             useUserStore().role = res.role;
             useUserStore().team = res.team;
             useUserStore().isAuthenticated = true;
-            callback && typeof callback === "function" ? callback() : null;
+            callback && typeof callback === "function" ? callback(res) : null;
         } else {
             token.value = null;
             useUserStore().college = "";
