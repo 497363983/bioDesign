@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from '../store'
 
 
 const routes = [
@@ -26,7 +27,12 @@ const routes = [
         path: '/login',
         component: () => import('@/views/login.vue'),
         beforeEnter: (to, from, next) => {
-            next()
+            console.log(to)
+            if (!useUserStore().isAuthenticated) {
+                next()
+            } else {
+                return { path: '/upload' }
+            }
         }
     },
     {

@@ -153,7 +153,7 @@ function onRegistry(formRef) {
           </div>
         </el-alert>
       </el-space> -->
-      <el-form-item label="再次输入密码" prop="re_password">
+      <el-form-item label="再次输入密码" prop="re_password" required>
         <el-input
           v-model="useUserStore().re_password"
           type="password"

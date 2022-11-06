@@ -44,7 +44,6 @@ export const login = async (callback) => {
             useUserStore().role = res.role;
             useUserStore().team = res.team;
             useUserStore().isAuthenticated = true;
-            console.log(useUserStore())
             ElMessage({
                 type: "success",
                 message: "登陆成功",
@@ -66,8 +65,16 @@ export const isLogin = (callback) => {
         username: useUserStore().username,
         timestamp: timestamp.value
     }).then(res => {
-        console.log(res);
-
+        if (res) {
+            token.value = res.token;
+            useUserStore().college = res.college;
+            useUserStore().grade = res.grade;
+            useUserStore().name = res.name;
+            useUserStore().role = res.role;
+            useUserStore().team = res.team;
+            useUserStore().isAuthenticated = true;
+            callback && typeof callback === "function" ? callback() : null;
+        }
     })
 }
 
