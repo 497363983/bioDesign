@@ -162,7 +162,7 @@ export const getTeamInformation = (id, callback) => {
         if (res) {
             useTeamStore().id = res.id;
             useTeamStore().abstract = res.subtitle ? transHtml(res.subtitle) : "";
-            useTeamStore().title = res.title ? transHtml(res.subtitle) : "";
+            useTeamStore().title = res.title ? transHtml(res.title) : "";
             useTeamStore().leader = res.leader;
             useTeamStore().member = res.member;
             useTeamStore().news = res.news ? transHtml(res.news) : "";
