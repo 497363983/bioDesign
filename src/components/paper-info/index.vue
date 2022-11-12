@@ -25,6 +25,7 @@ async function check(file) {
       type: "error",
       message: "只能上传pdf文件",
     });
+    return false;
   }
   const md5 = await fileMD5(file);
   if (md5 === useTeamStore().paper) {
@@ -33,12 +34,13 @@ async function check(file) {
       message: "文件内容与已上传版本一致",
     });
     return false;
+  } else {
+    return file;
   }
-  return file;
 }
 
 function uploadSuccess(response) {
-  console.log(response);
+  console.log('res',response);
   ElMessage({
     type: "success",
     message: "文件上传成功",
