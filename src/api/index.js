@@ -89,7 +89,7 @@ export const isLogin = (callback) => {
     })
 }
 
-export const registry = () => {
+export const registry = (callback) => {
     request.post('/api/signup.php', {
         username: useUserStore().username,
         password: MD5(useUserStore().password).toString(),
