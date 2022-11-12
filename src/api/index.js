@@ -141,7 +141,7 @@ export const uploadInformation = (success, failure) => {
         title: useTeamStore().title,
         abstract: useTeamStore().abstract,
         news: useTeamStore().news,
-        id: useTeamStore().id
+        id: useUserStore().team
     }).then(res => {
         if (res) {
             ElMessage({
