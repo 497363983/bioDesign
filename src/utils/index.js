@@ -23,12 +23,12 @@ export const isOpen = (config) => computed(() => {
 })
 
 export const entityMap = {
-    "amp": "&",
-    "lt": "<",
-    "gt": ">",
-    'quot': '"',
-    "#8216": "'",
-    "#x2F": "/",
+    "&lt;": "<",
+    "&gt;": ">",
+    "&amp;": "&",
+    "&nbsp;": " ",
+    "&quot;": "\"",
+    "&copy;": "©"
 };
 
 /**
@@ -36,7 +36,7 @@ export const entityMap = {
  * @param {String} str 
  * @returns 
  */
-export const transHtml = (str) => String(str).replace(/[&<>"'/\\]/g, (s) => `&${entityMap[s]};`);
+export const transHtml = (str) => String(str).replace(/&\w+;|&#(\d+);/g, (s) => `&${entityMap[s]};`);
 
 /**
  * 
