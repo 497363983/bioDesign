@@ -32,12 +32,9 @@ async function onLogin(formRef) {
   formRef.validate(async (valid) => {
     if (valid) {
       login(() => {
-        if (
-          useUserStore().isAuthenticated &&
-          useUserStore().role === "player"
-        ) {
+        if (useUserStore().isAuthenticated) {
           console.log(useUserStore().isAuthenticated, useUserStore().role);
-          router.push("/upload");
+          router.back();
         } else {
           // router.push("/upload");
         }

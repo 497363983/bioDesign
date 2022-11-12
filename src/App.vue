@@ -43,7 +43,7 @@ onMounted(() => {
           style="height: var(--el-menu-item-height)"
         >
           <theme-button />
-          <el-button text>
+          <el-button text type="default">
             <a href="https://github.com/497363983/bioDesign" target="_blank">
               <el-icon><github /></el-icon>
             </a>

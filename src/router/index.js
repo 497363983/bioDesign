@@ -35,5 +35,8 @@ const routes = [
 
 export const router = createRouter({
     history: createWebHashHistory('/bioDesign'),
-    routes
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        return { top: 0 }
+    },
 })

@@ -163,7 +163,7 @@ onMounted(async () => {
               <template #header>
                 <div class="card-header">
                   <span>队伍信息</span>
-                  <div v-if="canUpload">
+                  <div v-if="canUpload || useUserStore().role === 'test'">
                     <el-button
                       v-if="
                         !useUserStore().team &&
@@ -222,7 +222,7 @@ onMounted(async () => {
               <template #header>
                 <div class="card-header">
                   <span>项目信息</span>
-                  <div v-if="canUpload">
+                  <div v-if="canUpload || useUserStore().role === 'test'">
                     <el-button
                       @click="projectInfoRef.openEditDialog()"
                       :icon="Edit"
@@ -244,7 +244,9 @@ onMounted(async () => {
             <el-card v-if="useUserStore().team" shadow="hover">
               <template #header>项目论文</template>
               <div>
-                <paper-info :canUpload="canUpload" />
+                <paper-info
+                  :canUpload="canUpload || useUserStore().role === 'test'"
+                />
               </div>
             </el-card>
           </el-col>
