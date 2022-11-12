@@ -24,7 +24,9 @@ function remove(row) {
     }
   )
     .then(() => {
-      removeMember(row.username, () => {});
+      removeMember(row.username, () => {
+        getTeamInformation(useUserStore().team);
+      });
     })
     .catch(() => {
       //   editable.value = false;

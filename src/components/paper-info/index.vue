@@ -25,6 +25,10 @@ async function check(file) {
 
 function uploadSuccess(response, file) {
   console.log(response, file);
+  ElMessage({
+    type: "success",
+    message: "文件上传成功",
+  });
 }
 
 function uploadFailure(err, file) {
@@ -58,7 +62,7 @@ function uploadFailure(err, file) {
   </div>
   <pdf-viewer
     v-if="useTeamStore().paper"
-    :file="`https://qww123.ltd/bioDesign/pdf/${useUserStore().team}/${
+    :file="`../../pdf/${useUserStore().team}/${
       useTeamStore().paper
     }.pdf`"
   />
