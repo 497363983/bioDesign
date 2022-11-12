@@ -67,8 +67,10 @@ defineExpose({
 });
 
 onMounted(() => {
-  getTeamInformation(useUserStore().team);
-})
+  getTeamInformation(useUserStore().team, () => {
+    console.log(useTeamStore());
+  });
+});
 </script>
 
 <template>
