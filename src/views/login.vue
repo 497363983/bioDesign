@@ -2,6 +2,7 @@
 import { useUserStore } from "@/store";
 import { login, isLogin } from "@/api";
 import { useRouter } from "vue-router";
+import { username, token } from "../utils";
 
 const router = useRouter();
 
@@ -51,11 +52,13 @@ function registry() {
 }
 
 onMounted(() => {
-  isLogin((res) => {
-    if (res) {
-      router.push("/upload");
-    }
-  });
+  if (username.value && token.value) {
+    isLogin((res) => {
+      if (res) {
+        router.push("/upload");
+      }
+    });
+  }
 });
 </script>
 
