@@ -74,7 +74,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="time-counter" v-if="!canUpload || useUserStore().role !== 'test'">
+  <div class="time-counter" v-if="!canUpload && useUserStore().role !== 'test'">
     <div class="counter-wrap text-center">
       <counter :end="useConfigStore().upload.start">
         <template v-slot="{ day, second, hour, minute }">

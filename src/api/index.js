@@ -67,6 +67,7 @@ export const isLogin = (callback) => {
         username: username.value,
         timestamp: timestamp.value
     }).then(res => {
+        console.log('isLogin', res)
         if (res) {
             token.value = res.token;
             useUserStore().username = username.value;
