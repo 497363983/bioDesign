@@ -49,5 +49,5 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.TARGET }}
-          EXCLUDE: "api/,user/,team/,json/,pdf/"
+          EXCLUDE: "api/,user/,team/,json/,pdf/,lib/"
 
