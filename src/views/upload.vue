@@ -63,7 +63,9 @@ function leaveTeam() {
     });
 }
 
-function deleteTeam() {}
+function deleteTeam() {
+  
+}
 
 function logout() {
   useUserStore().$reset();
