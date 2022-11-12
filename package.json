@@ -27,7 +27,7 @@
     "lowlight": "^2.7.0",
     "pinia": "^2.0.23",
     "remixicon": "^2.5.0",
-    "vue": "^3.2.41",
+    "vue": "^3.2.45",
     "vue-router": "^4.1.6",
     "vue3-particles": "^2.5.1"
   },
