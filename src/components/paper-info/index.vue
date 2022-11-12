@@ -62,6 +62,7 @@ function uploadFailure(err, file) {
         timestamp,
       }"
       drag
+      multiple
       accept="pdf"
       :limit="1"
       :on-success="uploadSuccess"
