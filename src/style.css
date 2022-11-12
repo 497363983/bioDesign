@@ -19,6 +19,10 @@ html {
   font-weight: 700;
 }
 
+.text-danger {
+  color: var(--el-color-danger-light-3)
+}
+
 
 .flex {
   display: flex;

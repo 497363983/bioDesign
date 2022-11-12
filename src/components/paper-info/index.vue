@@ -5,6 +5,13 @@ import { token, timestamp, fileMD5 } from "../../utils";
 import { ElMessage } from "element-plus";
 import pdfViewer from "../pdf-viewer/index.vue";
 
+defineProps({
+  canUpload: {
+    type: Boolean,
+    default: false,
+  },
+});
+
 async function check(file) {
   if (file.size > 5 * 1024 * 1024) {
     ElMessage({
@@ -46,6 +53,7 @@ function uploadFailure(err, file) {
 <template>
   <div>
     <el-upload
+      v-if="canUpload"
       action="https://qww123.ltd/bioDesign/api/uploadFile.php"
       :data="{
         username: useUserStore().username,

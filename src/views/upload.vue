@@ -4,6 +4,7 @@ import userInfo from "@/components/user-info/index.vue";
 import teamInfo from "@/components/team-info/index.vue";
 import projectInfo from "@/components/project-info/index.vue";
 import paperInfo from "@/components/paper-info/index.vue";
+import notice from "./notice.vue";
 import { Edit } from "@element-plus/icons-vue";
 import { useConfigStore, useTeamStore, useUserStore } from "../store";
 import { timestamp } from "@/utils";
@@ -81,7 +82,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="time-counter" v-if="!canUpload && useUserStore().role !== 'test'">
+  <div
+    class="time-counter"
+    style="height: calc(100vh - 160px); font-size: 45px"
+    v-if="!canUpload && useUserStore().role !== 'test'"
+  >
     <div class="counter-wrap text-center">
       <counter :end="useConfigStore().upload.start">
         <template v-slot="{ day, second, hour, minute }">
@@ -92,11 +97,31 @@ onMounted(async () => {
       </counter>
     </div>
   </div>
-  <div v-else>
+  <div>
     <el-container>
       <el-main>
+        <div class="time-counter" style="margin: 30px 0">
+          <div class="counter-wrap text-center">
+            <counter :end="useConfigStore().upload.end">
+              <template v-slot="{ day, second, hour, minute, isDanger }">
+                <span style="font-size: 20px"
+                  >上传通道预计将于
+                  <span :class="{ 'text-danger': isDanger }">{{ day }}</span
+                  >天<span :class="{ 'text-danger': isDanger }">{{ hour }}</span
+                  >时<span :class="{ 'text-danger': isDanger }">{{
+                    minute
+                  }}</span
+                  >分<span :class="{ 'text-danger': isDanger }">{{
+                    second
+                  }}</span
+                  >秒后关闭</span
+                >
+              </template>
+            </counter>
+          </div>
+        </div>
         <el-row>
-          <el-col :span="18" :offset="3">
+          <el-col :span="18" :offset="3" :xs="{ span: 24, offset: 0 }">
             <el-card shadow="hover">
               <template #header>
                 <div class="card-header">
@@ -116,14 +141,27 @@ onMounted(async () => {
             </el-card>
           </el-col>
         </el-row>
-
         <el-row>
-          <el-col :span="18" :offset="3">
+          <el-col :span="18" :offset="3" :xs="{ span: 24, offset: 0 }">
+            <el-card shadow="hover">
+              <template #header>
+                <span>比赛须知</span>
+              </template>
+              <div style="height: 500px">
+                <el-scrollbar height="100%">
+                  <notice />
+                </el-scrollbar>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="18" :offset="3" :xs="{ span: 24, offset: 0 }">
             <el-card shadow="hover">
               <template #header>
                 <div class="card-header">
                   <span>队伍信息</span>
-                  <div>
+                  <div v-if="canUpload">
                     <el-button
                       v-if="
                         !useUserStore().team &&
@@ -169,18 +207,20 @@ onMounted(async () => {
                 </div>
               </template>
               <div>
-                <team-info v-if="useUserStore().team" ref="teamInfoRef" />
+                <el-scrollbar>
+                  <team-info v-if="useUserStore().team" ref="teamInfoRef" />
+                </el-scrollbar>
               </div>
             </el-card>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="18" :offset="3">
+          <el-col :span="18" :offset="3" :xs="{ span: 24, offset: 0 }">
             <el-card v-if="useUserStore().team" shadow="hover">
               <template #header>
                 <div class="card-header">
                   <span>项目信息</span>
-                  <div>
+                  <div v-if="canUpload">
                     <el-button
                       @click="projectInfoRef.openEditDialog()"
                       :icon="Edit"
@@ -198,11 +238,11 @@ onMounted(async () => {
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="18" :offset="3">
+          <el-col :span="18" :offset="3" :xs="{ span: 24, offset: 0 }">
             <el-card v-if="useUserStore().team" shadow="hover">
               <template #header>项目论文</template>
               <div>
-                <paper-info />
+                <paper-info :canUpload="canUpload" />
               </div>
             </el-card>
           </el-col>
@@ -214,7 +254,6 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .counter-wrap {
-  font-size: 45px;
   font-weight: 800;
 }
 .info-text {
@@ -222,7 +261,6 @@ onMounted(async () => {
 }
 
 .time-counter {
-  height: calc(100vh - 160px);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,5 +1,6 @@
 <script setup>
 import themeButton from "@/components/theme-button/index.vue";
+import github from "./components/icons/github.vue";
 import { useWindowSize } from "@vueuse/core";
 import { isLogin } from "@/api";
 import { token, username } from "./utils";
@@ -42,6 +43,11 @@ onMounted(() => {
           style="height: var(--el-menu-item-height)"
         >
           <theme-button />
+          <el-button text>
+            <a href="https://github.com/497363983/bioDesign" target="_blank">
+              <el-icon><github /></el-icon>
+            </a>
+          </el-button>
         </li>
       </el-menu>
     </el-header>
@@ -103,6 +109,14 @@ onMounted(() => {
     .flex-grow {
       flex-grow: 1;
     }
+  }
+}
+</style>
+
+<style lang="scss">
+.el-menu--popup-container {
+  .el-button + .el-button {
+    margin-left: 0;
   }
 }
 </style>

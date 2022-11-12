@@ -4,6 +4,13 @@ import editor from "@/components/editor/index.vue";
 import { uploadInformation } from "../../api";
 import { ElMessageBox } from "element-plus";
 
+defineProps({
+  canUpload: {
+    type: Boolean,
+    default: false,
+  },
+});
+
 const editable = ref(false);
 const canEditInformation = ref(true);
 

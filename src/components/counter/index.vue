@@ -10,6 +10,10 @@ const props = defineProps({
     type: [Function, null],
     default: null,
   },
+  dangerPoint: {
+    type: Number,
+    default: 24 * 60 * 60,
+  },
 });
 
 const timestamp = useTimestamp({ offset: 0 });
@@ -21,14 +25,7 @@ const d = computed(() => Math.max(parseInt(diff.value / 86400), 0));
 const h = computed(() =>
   Math.max(parseInt(diff.value / 3600) - 24 * d.value, 0)
 );
-
-// watch(
-//   () => time.value,
-//   () => {
-//     console.log(time.value)
-//     props.endCallback && time.value <= 0 ? endCallback() : null;
-//   }
-// );
+const isDanger = computed(() => diff.value <= props.dangerPoint);
 
 watchEffect(() => {
   props.endCallback && time.value <= 0 ? endCallback() : null;
@@ -42,8 +39,7 @@ watchEffect(() => {
       :hour="h.toString().padStart(2, '0')"
       :minute="min.toString().padStart(2, '0')"
       :second="s.toString().padStart(2, '0')"
+      :isDanger="isDanger"
     ></slot>
   </span>
 </template>
-
-<style lang="scss" scoped></style>
