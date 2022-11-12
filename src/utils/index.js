@@ -36,7 +36,7 @@ export const entityMap = {
  * @param {String} str 
  * @returns 
  */
-export const transHtml = (str) => String(str).replace(/&\w+;|&#(\d+);/g, (s) => `&${entityMap[s]};`);
+export const transHtml = (str) => String(str).replace(/&\w+;|&#(\d+);/g, (s) => `${entityMap[s]}`);
 
 /**
  * 
