@@ -44,8 +44,14 @@ onMounted(() => {
         >
           <theme-button />
           <el-button text type="default">
-            <a href="https://github.com/497363983/bioDesign" target="_blank">
-              <el-icon><github /></el-icon>
+            <a
+              style="var(--el-button-text-color) !important"
+              href="https://github.com/497363983/bioDesign"
+              target="_blank"
+            >
+              <span
+                ><el-icon><github /></el-icon
+              ></span>
             </a>
           </el-button>
         </li>
