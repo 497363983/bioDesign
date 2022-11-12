@@ -109,7 +109,7 @@ onMounted(async () => {
                   <span>队伍信息</span>
                   <div>
                     <el-button
-                      v-if="!useUserStore().team"
+                      v-if="!useUserStore().team && useUserStore().college === '生物工程学院'"
                       type="primary"
                       text
                       @click="newTeam"
