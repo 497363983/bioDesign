@@ -135,7 +135,7 @@ export const createTeam = (callback) => {
 
 
 export const uploadInformation = (success, failure) => {
-    request.post('/api/uploadInformation', {
+    request.post('/api/uploadInformation.php', {
         username: useUserStore().username,
         timestamp: timestamp.value,
         title: useTeamStore().title,
