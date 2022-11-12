@@ -36,6 +36,7 @@ export const login = async (callback) => {
     }).then(res => {
         console.log(res)
         if (res) {
+            username.value = res.username;
             token.value = res.token;
             useUserStore().college = res.college;
             useUserStore().grade = res.grade;
