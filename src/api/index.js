@@ -1,8 +1,9 @@
 import { request } from "./request";
 import { MD5 } from "crypto-js";
 import { token, timestamp, username } from "../utils";
-import { useUserStore } from "../store";
+import { useTeamStore, useUserStore } from "../store";
 import { ElMessage } from "element-plus";
+import { transHtml } from "../utils";
 
 /**
  * 
@@ -25,9 +26,7 @@ export const getConfig = (config) => request.get('/api/getConfig.php', { config 
 
 /**
  * 
- * @param {String} username 
- * @param {String} password 
- * @param {Number} timestamp 
+ * @param {Function} callback 
  */
 export const login = async (callback) => {
     request.post('/api/login.php', {
@@ -59,7 +58,10 @@ export const login = async (callback) => {
     })
 }
 
-
+/**
+ * 
+ * @param {Function} callback 
+ */
 export const isLogin = (callback) => {
     request.post('/api/isLogin.php', {
         username: username.value,
@@ -67,6 +69,7 @@ export const isLogin = (callback) => {
     }).then(res => {
         if (res) {
             token.value = res.token;
+            useUserStore().username = username.value;
             useUserStore().college = res.college;
             useUserStore().grade = res.grade;
             useUserStore().name = res.name;
@@ -103,5 +106,96 @@ export const registry = () => {
             });
             callback && typeof callback === "function" ? callback() : null
         }
+    })
+}
+
+export const createTeam = (callback) => {
+    request.post('api/createTeam.php', {
+        username: useUserStore().username,
+        timestamp: timestamp.value
+    }).then(res => {
+        if (res) {
+            useTeamStore().id = res.id;
+            useTeamStore().abstract = res.subtitle ? transHtml(res.subtitle) : "";
+            useTeamStore().title = res.title ? transHtml(res.subtitle) : "";
+            useTeamStore().leader = res.leader;
+            useTeamStore().member = res.member;
+            useTeamStore().news = res.news ? transHtml(res.news) : "";
+            useTeamStore().paper = res.paper;
+            ElMessage({
+                type: "success",
+                message: "创建成功",
+            });
+            callback && typeof callback === "function" ? callback() : null
+        }
+    })
+}
+
+
+export const uploadInformation = (success, failure) => {
+    request.post('/api/uploadInformation', {
+        username: useUserStore().username,
+        timestamp: timestamp.value,
+        title: useTeamStore().title,
+        abstract: useTeamStore().abstract,
+        news: useTeamStore().news,
+        id: useTeamStore().id
+    }).then(res => {
+        if (res) {
+            ElMessage({
+                type: "success",
+                message: "上传成功"
+            })
+            success && typeof success === "function" ? success(res) : null
+        }
+    }).catch(res => {
+        failure && typeof failure === "function" ? failure(res) : null
+    })
+}
+
+export const getTeamInformation = (id, callback) => {
+    request.get('/api/getTeamInformation.php', {
+        id
+    }).then((res) => {
+        if (res) {
+            useTeamStore().id = res.id;
+            useTeamStore().abstract = res.subtitle ? transHtml(res.subtitle) : "";
+            useTeamStore().title = res.title ? transHtml(res.subtitle) : "";
+            useTeamStore().leader = res.leader;
+            useTeamStore().member = res.member;
+            useTeamStore().news = res.news ? transHtml(res.news) : "";
+            useTeamStore().paper = res.paper;
+            callback && typeof callback === "function" ? callback() : null
+        }
+    })
+}
+
+export const searching = (kind, type, target) => request.get("/api/searching.php", { kind, type, target });
+
+/**
+ * 
+ * @param {String[]} member 
+ * @param {Function} callback 
+ */
+export const addMember = (member, callback) => {
+    request.post('/api/addMember.php', {
+        username: useUserStore().username,
+        id: useUserStore().team,
+        member
+    }).then(() => {
+        getTeamInformation(useUserStore().team)
+        callback && typeof callback === "function" ? callback() : null
+    })
+}
+
+
+export const removeMember = (target, callback) => {
+    request.post("/api/removeMember.php", {
+        username: useUserStore().username,
+        id: useUserStore().team,
+        timestamp: timestamp.value,
+        target
+    }).then(() => {
+        callback && typeof callback === "function" ? callback() : null
     })
 }

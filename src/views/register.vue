@@ -7,7 +7,7 @@ const router = useRouter();
 
 const colleges = ref([
   "生物工程学院",
-  "化学工工程学院",
+  "化学工程学院",
   "药学院",
   "绿色制药协同中心",
   "环境学院",

@@ -9,10 +9,8 @@ axios.defaults.timeout = 10000
 axios.interceptors.request.use(
     config => {
         if (config.method === "post" && token.value && typeof window !== "undefined") {
-            console.log(token.value);
             config.headers.token = token.value;
         }
-        console.log(config)
         return config
     },
     error => {

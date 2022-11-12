@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { useUserStore } from '../store'
 
 
@@ -25,15 +25,7 @@ const routes = [
     },
     {
         path: '/login',
-        component: () => import('@/views/login.vue'),
-        beforeEnter: (to, from, next) => {
-            console.log(to)
-            if (!useUserStore().isAuthenticated) {
-                next()
-            } else {
-                return { path: '/upload' }
-            }
-        }
+        component: () => import('@/views/login.vue')
     },
     {
         path: '/register',
@@ -42,6 +34,6 @@ const routes = [
 ]
 
 export const router = createRouter({
-    history: createWebHistory('/bioDesign'),
+    history: createWebHashHistory('/bioDesign'),
     routes
 })

@@ -1,6 +1,6 @@
 <script setup>
 import { useUserStore } from "@/store";
-import { login } from "@/api";
+import { login, isLogin } from "@/api";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -49,6 +49,14 @@ async function onLogin(formRef) {
 function registry() {
   router.replace("/register");
 }
+
+onMounted(() => {
+  isLogin((res) => {
+    if (res) {
+      router.push("/upload");
+    }
+  });
+});
 </script>
 
 <template>
