@@ -158,7 +158,13 @@ onMounted(() => {
             </template>
             <template #default="{ row }">
               <el-button type="primary"> 转移负责人 </el-button>
-              <el-button type="danger" @click="remove(row)"> 移除 </el-button>
+              <el-button
+                type="danger"
+                v-if="row.username !== useUserStore().username"
+                @click="remove(row)"
+              >
+                移除
+              </el-button>
             </template>
           </el-table-column>
         </el-table>

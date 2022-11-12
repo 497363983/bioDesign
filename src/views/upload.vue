@@ -62,13 +62,20 @@ function leaveTeam() {
     });
 }
 
+function deleteTeam() {}
+
+function logout() {
+  useUserStore().$reset();
+  useTeamStore().$reset();
+  router.replace("/login");
+}
+
 onMounted(async () => {
   useConfigStore().upload = await getConfig("upload");
   if (canUpload.value) {
     if (!useUserStore().isAuthenticated) {
       router.replace("/login");
     }
-    getTeamInformation(useUserStore().team);
   }
 });
 </script>
@@ -91,7 +98,16 @@ onMounted(async () => {
         <el-row>
           <el-col :span="18" :offset="3">
             <el-card shadow="hover">
-              <template #header>用户信息</template>
+              <template #header>
+                <div class="card-header">
+                  <span>用户信息</span>
+                  <div>
+                    <el-button type="danger" text @click="logout"
+                      >退出登录</el-button
+                    >
+                  </div>
+                </div>
+              </template>
               <div>
                 <el-scrollbar>
                   <user-info />
@@ -109,7 +125,10 @@ onMounted(async () => {
                   <span>队伍信息</span>
                   <div>
                     <el-button
-                      v-if="!useUserStore().team && useUserStore().college === '生物工程学院'"
+                      v-if="
+                        !useUserStore().team &&
+                        useUserStore().college === '生物工程学院'
+                      "
                       type="primary"
                       text
                       @click="newTeam"
@@ -127,11 +146,24 @@ onMounted(async () => {
                       >编辑队伍</el-button
                     >
                     <el-button
-                      v-if="useUserStore().team"
+                      v-if="
+                        useUserStore().team &&
+                        useUserStore().username !== useTeamStore().leader
+                      "
                       type="danger"
                       text
                       @click="leaveTeam"
                       >退出队伍</el-button
+                    >
+                    <el-button
+                      v-if="
+                        useUserStore().team &&
+                        useUserStore().username === useTeamStore().leader
+                      "
+                      type="danger"
+                      text
+                      @click="deleteTeam"
+                      >解散队伍</el-button
                     >
                   </div>
                 </div>
