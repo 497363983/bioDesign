@@ -65,6 +65,10 @@ async function remoteSearch(query) {
 defineExpose({
   openEditDialog,
 });
+
+onMounted(() => {
+  getTeamInformation(useUserStore().team);
+})
 </script>
 
 <template>

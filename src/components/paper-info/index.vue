@@ -56,7 +56,12 @@ function uploadFailure(err, file) {
       </template>
     </el-upload>
   </div>
-  <pdf-viewer v-if="useTeamStore().paper" file="https://qww123.ltd/bioDesign/pdf/8/8db5a5543923e9e3345700fce1a487d7.pdf"/>
+  <pdf-viewer
+    v-if="useTeamStore().paper"
+    :file="`https://qww123.ltd/bioDesign/pdf/${useUserStore().team}/${
+      useTeamStore().paper
+    }.pdf`"
+  />
 </template>
 
 <style lang="scss" scoped></style>
