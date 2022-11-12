@@ -6,7 +6,6 @@ import { ElMessage } from "element-plus";
 import pdfViewer from "../pdf-viewer/index.vue";
 
 async function check(file) {
-  const md5 = await fileMD5(file);
   if (file.size > 5 * 1024 * 1024) {
     ElMessage({
       type: "error",
@@ -19,6 +18,14 @@ async function check(file) {
       type: "error",
       message: "只能上传pdf文件",
     });
+  }
+  const md5 = await fileMD5(file);
+  if (md5 === useTeamStore().paper) {
+    ElMessage({
+      type: "info",
+      message: "文件内容与已上传版本一致",
+    });
+    return false;
   }
   return file;
 }
@@ -62,9 +69,7 @@ function uploadFailure(err, file) {
   </div>
   <pdf-viewer
     v-if="useTeamStore().paper"
-    :file="`../../pdf/${useUserStore().team}/${
-      useTeamStore().paper
-    }.pdf`"
+    :file="`../../pdf/${useUserStore().team}/${useTeamStore().paper}.pdf`"
   />
 </template>
 
