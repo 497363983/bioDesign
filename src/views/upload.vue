@@ -7,7 +7,7 @@ import paperInfo from "@/components/paper-info/index.vue";
 import notice from "./notice.vue";
 import { Edit } from "@element-plus/icons-vue";
 import { useConfigStore, useTeamStore, useUserStore } from "../store";
-import { timestamp } from "@/utils";
+import { timestamp, username, token } from "@/utils";
 import { getConfig, getTeamInformation, createTeam, removeMember } from "@/api";
 import { useRouter } from "vue-router";
 
@@ -68,6 +68,8 @@ function deleteTeam() {}
 function logout() {
   useUserStore().$reset();
   useTeamStore().$reset();
+  token.value = null;
+  username.value = null;
   router.replace("/login");
 }
 
