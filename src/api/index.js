@@ -63,7 +63,7 @@ export const login = async (callback) => {
  * 
  * @param {Function} callback 
  */
-export const isLogin = (callback) => {
+export const isLogin = (success, failure) => {
     request.post('/api/isLogin.php', {
         username: username.value,
         timestamp: timestamp.value
@@ -78,7 +78,7 @@ export const isLogin = (callback) => {
             useUserStore().role = res.role;
             useUserStore().team = res.team;
             useUserStore().isAuthenticated = true;
-            callback && typeof callback === "function" ? callback(res) : null;
+            success && typeof success === "function" ? success(res) : null;
         } else {
             token.value = null;
             useUserStore().college = "";
@@ -87,6 +87,7 @@ export const isLogin = (callback) => {
             useUserStore().role = "";
             useUserStore().team = "";
             useUserStore().isAuthenticated = false;
+            failure && typeof failure === "function" ? failure(res) : null;
         }
     })
 }
