@@ -40,7 +40,7 @@ async function check(file) {
 }
 
 function uploadSuccess(response) {
-  console.log(response);
+  // console.log(response);
   if (response.code === 0) {
     ElMessage({
       type: "success",
