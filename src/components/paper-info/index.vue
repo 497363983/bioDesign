@@ -40,11 +40,18 @@ async function check(file) {
 }
 
 function uploadSuccess(response) {
-  console.log('res',response);
-  ElMessage({
-    type: "success",
-    message: "文件上传成功",
-  });
+  if (response.data.code === 0) {
+    ElMessage({
+      type: "success",
+      message: "文件上传成功",
+    });
+    useTeamStore().paper = response.data.paper;
+  } else {
+    ElMessage({
+      type: "error",
+      message: response.message,
+    });
+  }
 }
 
 function uploadFailure(err, file) {
