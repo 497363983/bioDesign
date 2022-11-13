@@ -93,7 +93,7 @@ defineExpose({
         <editor
           v-model:content="useTeamStore().title"
           v-model:isChange="isChange"
-          :limit="50"
+          :limit="100"
           :editable="canEditInformation"
         />
         <h2>项目摘要</h2>
@@ -101,12 +101,13 @@ defineExpose({
           v-model:content="useTeamStore().abstract"
           v-model:isChange="isChange"
           :editable="canEditInformation"
+          :limit="600"
         />
         <h2>创新之处</h2>
         <editor
           v-model:content="useTeamStore().news"
           v-model:isChange="isChange"
-          :limit="300"
+          :limit="400"
           :editable="canEditInformation"
         />
       </el-scrollbar>
