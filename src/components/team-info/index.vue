@@ -157,7 +157,12 @@ onMounted(() => {
               </el-select>
             </template>
             <template #default="{ row }">
-              <el-button type="primary"> 转移负责人 </el-button>
+              <el-button
+                type="primary"
+                v-if="row.username !== useUserStore().username"
+              >
+                转移负责人
+              </el-button>
               <el-button
                 type="danger"
                 v-if="row.username !== useUserStore().username"
