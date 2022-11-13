@@ -8,6 +8,11 @@ export const username = useStorage('username', null);
 
 export const timestamp = useTimestamp({ offset: 0 });
 
+/**
+ * 
+ * @param {Object} config 
+ * @returns 
+ */
 export const isOpen = (config) => computed(() => {
     if (!config.open) {
         return false;
@@ -50,3 +55,6 @@ export const fileMD5 = (file) => new Promise(resolve => {
     };
     fileReader.readAsBinaryString(file);
 })
+
+
+// export const 
