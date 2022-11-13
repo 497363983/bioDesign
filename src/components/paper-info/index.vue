@@ -41,7 +41,7 @@ async function check(file) {
 
 function uploadSuccess(response) {
   console.log(response);
-  if (response.data.code === 0) {
+  if (response.code === 0) {
     ElMessage({
       type: "success",
       message: "文件上传成功",
