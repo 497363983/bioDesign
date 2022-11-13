@@ -1,4 +1,4 @@
-import { useStorage, useTimestamp } from "@vueuse/core"
+import { useStorage, useTimestamp, useTitle } from "@vueuse/core"
 import { computed } from "vue";
 import { MD5, enc } from "crypto-js";
 
@@ -7,6 +7,8 @@ export const token = useStorage('token', null);
 export const username = useStorage('username', null);
 
 export const timestamp = useTimestamp({ offset: 0 });
+
+export const title = useTitle('生物创新设计大赛');
 
 /**
  * 
