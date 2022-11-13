@@ -1,11 +1,13 @@
 <script setup>
 import { useUserStore, useTeamStore } from "@/store";
 import { Search } from "@element-plus/icons-vue";
+import { ElMessage, ElMessageBox } from "element-plus";
 import {
   searching,
   addMember,
   getTeamInformation,
   removeMember,
+  changeLeader,
 } from "../../api";
 
 const editable = ref(false);
@@ -52,6 +54,16 @@ function onSelect(value) {
 
 function openEditDialog() {
   editable.value = true;
+}
+
+function change(target) {
+  changeLeader(target, () => {
+    getTeamInformation(useUserStore().team);
+    ElMessage({
+      type: "success",
+      message: "移交负责人成功",
+    });
+  });
 }
 
 async function remoteSearch(query) {
@@ -160,6 +172,7 @@ onMounted(() => {
               <el-button
                 type="primary"
                 v-if="row.username !== useUserStore().username"
+                @click="change(row.username)"
               >
                 转移负责人
               </el-button>

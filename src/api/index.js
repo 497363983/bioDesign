@@ -201,3 +201,24 @@ export const removeMember = (target, callback) => {
         callback && typeof callback === "function" ? callback() : null
     })
 }
+
+export const changeLeader = (target, callback) => {
+    request.post("/api/changeLeader.php", {
+        username: useUserStore().username,
+        id: useUserStore().team,
+        target,
+        timestamp: timestamp.value,
+    }).then(() => {
+        callback && typeof callback === "function" ? callback() : null
+    })
+}
+
+export const deleteTeam = (callback) => {
+    request.post("/api/deleteTeam.php", {
+        username: useUserStore().username,
+        timestamp: timestamp.value,
+        id: useUserStore().team,
+    }).then(() => {
+        callback && typeof callback === "function" ? callback() : null
+    })
+}

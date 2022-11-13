@@ -8,8 +8,16 @@ import notice from "./notice.vue";
 import { Edit } from "@element-plus/icons-vue";
 import { useConfigStore, useTeamStore, useUserStore } from "../store";
 import { timestamp, username, token } from "@/utils";
-import { getConfig, getTeamInformation, createTeam, removeMember } from "@/api";
+import {
+  getConfig,
+  createTeam,
+  removeMember,
+  deleteTeam,
+  isLogin,
+} from "@/api";
 import { useRouter } from "vue-router";
+import { ElMessage, ElMessageBox } from "element-plus";
+import { getTeamInformation } from "../api";
 
 const router = useRouter();
 const projectInfoRef = ref();
@@ -63,8 +71,30 @@ function leaveTeam() {
     });
 }
 
-function deleteTeam() {
-  
+function removeTeam() {
+  ElMessageBox.confirm(`确认解散当前队伍？`, "提示", {
+    confirmButtonText: "确认",
+    cancelButtonText: "取消",
+    showClose: false,
+    type: "warning",
+  })
+    .then(() => {
+      deleteTeam(() => {
+        useTeamStore().$reset();
+        ElMessage({
+          type: "success",
+          message: "解散队伍成功",
+        });
+        isLogin(() => {
+          if (useUserStore().team) {
+            getTeamInformation(useUserStore().team);
+          }
+        });
+      });
+    })
+    .catch(() => {
+      //   editable.value = false;
+    });
 }
 
 function logout() {
@@ -204,7 +234,7 @@ onMounted(async () => {
                       "
                       type="danger"
                       text
-                      @click="deleteTeam"
+                      @click="removeTeam"
                       >解散队伍</el-button
                     >
                   </div>
@@ -218,9 +248,9 @@ onMounted(async () => {
             </el-card>
           </el-col>
         </el-row>
-        <el-row>
+        <el-row v-if="useUserStore().team">
           <el-col :span="18" :offset="3" :xs="{ span: 24, offset: 0 }">
-            <el-card v-if="useUserStore().team" shadow="hover">
+            <el-card shadow="hover">
               <template #header>
                 <div class="card-header">
                   <span>项目信息</span>
@@ -241,9 +271,9 @@ onMounted(async () => {
             </el-card>
           </el-col>
         </el-row>
-        <el-row>
+        <el-row v-if="useUserStore().team">
           <el-col :span="18" :offset="3" :xs="{ span: 24, offset: 0 }">
-            <el-card v-if="useUserStore().team" shadow="hover">
+            <el-card shadow="hover">
               <template #header>项目论文</template>
               <div>
                 <paper-info
