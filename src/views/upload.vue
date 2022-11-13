@@ -140,7 +140,7 @@ onMounted(async () => {
       </counter>
     </div>
   </div>
-  <div>
+  <div v-else>
     <el-container>
       <el-main>
         <div class="time-counter" style="margin: 30px 0">
