@@ -18,7 +18,6 @@ import {
 } from "@/api";
 import { useRouter } from "vue-router";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { getTeamInformation } from "../api";
 
 const router = useRouter();
 const projectInfoRef = ref();
