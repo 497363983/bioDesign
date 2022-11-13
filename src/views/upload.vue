@@ -111,14 +111,14 @@ function logout() {
   useTeamStore().$reset();
   token.value = null;
   username.value = null;
-  router.replace("/login");
+  router.push("/login");
 }
 
 onMounted(async () => {
   useConfigStore().upload = await getConfig("upload");
   if (canUpload.value) {
     if (!useUserStore().isAuthenticated) {
-      router.replace("/login");
+      router.push("/login");
     }
   }
 });

@@ -36,7 +36,7 @@ async function onLogin(formRef) {
           console.log(useUserStore().isAuthenticated, useUserStore().role);
           router.back();
         } else {
-          // router.push("/upload");
+          router.push("/upload");
         }
         loginLoading.value = false;
       });
