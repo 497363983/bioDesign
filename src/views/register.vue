@@ -114,10 +114,6 @@ const rules = reactive({
   ],
 });
 
-function uo(){
-  console.log(useUserStore().grade)
-}
-
 function onRegistry(formRef) {
   if (!formRef) return;
   registryLoading.value = true;
@@ -181,7 +177,11 @@ function onRegistry(formRef) {
         <el-input v-model="useUserStore().name"></el-input>
       </el-form-item>
       <el-form-item label="年级" prop="grade">
-        <el-date-picker v-model="useUserStore().grade" value-format="YYYY" @change="uo" type="year" />
+        <el-date-picker
+          v-model="useUserStore().grade"
+          value-format="YYYY"
+          type="year"
+        />
       </el-form-item>
       <el-form-item label="学院" prop="college">
         <el-select v-model="useUserStore().college">
