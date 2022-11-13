@@ -70,13 +70,13 @@ defineExpose({
       >
     </template> -->
     <el-descriptions-item label="项目名称">
-      <span v-html="useTeamStore().title"></span>
+      <span class="ProseMirror" v-html="useTeamStore().title"></span>
     </el-descriptions-item>
     <el-descriptions-item label="项目摘要">
-      <span v-html="useTeamStore().abstract"></span>
+      <span class="ProseMirror" v-html="useTeamStore().abstract"></span>
     </el-descriptions-item>
     <el-descriptions-item label="创新之处">
-      <span v-html="useTeamStore().news"></span>
+      <span class="ProseMirror" v-html="useTeamStore().news"></span>
     </el-descriptions-item>
   </el-descriptions>
   <el-dialog
