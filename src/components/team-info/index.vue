@@ -59,6 +59,7 @@ function openEditDialog() {
 function change(target) {
   changeLeader(target, () => {
     getTeamInformation(useUserStore().team);
+    editable.value = false;
     ElMessage({
       type: "success",
       message: "移交负责人成功",

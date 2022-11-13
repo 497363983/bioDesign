@@ -14,6 +14,7 @@ import {
   removeMember,
   deleteTeam,
   isLogin,
+  getTeamInformation,
 } from "@/api";
 import { useRouter } from "vue-router";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -38,7 +39,7 @@ const canUpload = computed(() => {
   }
 });
 
-function newTeam() {
+function newTeam(teamRef) {
   ElMessageBox.confirm(`确认创建一支新队伍？`, "提示", {
     confirmButtonText: "确认",
     cancelButtonText: "取消",
@@ -46,8 +47,11 @@ function newTeam() {
   })
     .then(() => {
       createTeam(() => {
+        isLogin(() => {
+          getTeamInformation(useUserStore().team);
+        });
         if (useTeamStore().leader === useUserStore().username) {
-          teamInfoRef.value.openEditDialog();
+          teamRef.openEditDialog();
         }
       });
     })
@@ -64,7 +68,13 @@ function leaveTeam() {
     type: "warning",
   })
     .then(() => {
-      removeMember(useUserStore().username, () => {});
+      removeMember(useUserStore().username, () => {
+        isLogin(() => {
+          if (useUserStore().team) {
+            getTeamInformation(useUserStore().team);
+          }
+        });
+      });
     })
     .catch(() => {
       //   editable.value = false;
@@ -203,7 +213,7 @@ onMounted(async () => {
                       "
                       type="primary"
                       text
-                      @click="newTeam"
+                      @click="newTeam(teamInfoRef)"
                       >创建队伍</el-button
                     >
                     <!-- <el-button type="primary" text>加入队伍</el-button> -->
