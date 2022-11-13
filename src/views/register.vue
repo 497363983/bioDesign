@@ -46,6 +46,15 @@ function validate_re_password(rule, value, callback) {
   }
 }
 
+function validate_username(rule, value, callback) {
+  const regex = /^[0-9]{12}$/;
+  if (regex.test(value)) {
+    callback();
+  } else {
+    callback(new Error("请输入数字"));
+  }
+}
+
 const rules = reactive({
   username: [
     {
@@ -57,6 +66,10 @@ const rules = reactive({
       type: "string",
       len: 12,
       message: "请输入12位学号",
+      trigger: "blur",
+    },
+    {
+      validator: validate_username,
       trigger: "blur",
     },
   ],
