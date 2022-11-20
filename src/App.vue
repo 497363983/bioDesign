@@ -29,7 +29,16 @@ onMounted(() => {
         </el-menu-item>
         <div class="flex-grow"></div>
         <el-menu-item index="/">首页</el-menu-item>
-        <el-menu-item index="upload">上传通道</el-menu-item>
+        <el-menu-item
+          v-if="['player', 'admin'].includes(useUserStore().role)"
+          index="upload"
+          >上传通道</el-menu-item
+        >
+        <el-menu-item
+          v-if="['judge', 'admin'].includes(useUserStore().role)"
+          index="judge"
+          >评分系统</el-menu-item
+        >
         <el-menu-item index="timeline">比赛日程</el-menu-item>
         <!-- <li
           class="el-menu-item add-item"

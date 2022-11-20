@@ -1,24 +1,23 @@
 <script setup>
-import { isLogin } from "../api";
+import { isLogin, getTeamList } from "../api";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../store";
 
 const router = useRouter();
-onMounted(() => {
-  isLogin(() => {
+const teamList = ref([]);
+onMounted(async () => {
+  isLogin(async () => {
     if (useUserStore().role !== "judge") {
       router.push("/upload");
+      teamList.value = await getTeamList();
+      console.log(teamList.value);
     }
   });
 });
 </script>
 
 <template>
-  <div>
-    
-  </div>
+  <div></div>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

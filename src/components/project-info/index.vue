@@ -1,8 +1,8 @@
 <script setup>
-import { useTeamStore } from "@/store";
 import editor from "@/components/editor/index.vue";
-import { uploadInformation } from "../../api";
+import { uploadInformation, getTeamInformation } from "../../api";
 import { ElMessageBox } from "element-plus";
+import { useUserStore, useTeamStore } from "../../store";
 
 defineProps({
   canUpload: {
@@ -30,6 +30,7 @@ function onClose(done) {
       .then(() => {
         uploadInformation(() => {
           editable.value = false;
+          getTeamInformation(useUserStore().team);
         });
       })
       .catch((action) => {

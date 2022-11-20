@@ -223,3 +223,10 @@ export const deleteTeam = (callback) => {
         callback && typeof callback === "function" ? callback() : null
     })
 }
+
+export const getTeamList = async () => {
+    return request.post("/api/getTeamList.php", {
+        username: useUserStore().username,
+        timestamp: timestamp.value,
+    })
+}
