@@ -67,6 +67,7 @@ const editor = useEditor({
     emits("update:content", editor.getHTML());
     emits("update:isChange", true);
   },
+  editable: props.editable,
 });
 
 watch(
@@ -79,6 +80,17 @@ watch(
     editor.value.commands.setContent(newValue, false);
   }
 );
+
+watch(
+  () => props.editable,
+  (newValue) => {
+    console.log(newValue);
+    editor.value.setOptions({
+      editable: newValue ?? false,
+    });
+  }
+);
+
 onMounted(() => {
   console.log(editor);
 });

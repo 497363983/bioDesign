@@ -1,19 +1,14 @@
 <script setup>
-import { isLogin, getTeamList } from "../api";
+import { isLogin, getTeamList, judgeProject } from "../api";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../store";
 import { transHtml } from "../utils";
+import { computed, reactive } from "vue";
+import pdfViewer from "../components/pdf-viewer/index.vue";
+import editor from "../components/editor/index.vue";
+import { ElMessage } from "element-plus";
 
 const teamList = ref([
-  {
-    id: "52",
-    leader: "202105070313",
-    title: "&lt;p&gt;12345&lt;/p&gt;",
-    abstract: "&lt;p&gt;上山打老虎&lt;/p&gt;",
-    new: "&lt;p&gt;打到小松鼠&lt;/p&gt;",
-    year: "2022",
-    paper: "2b2cbccb0b53163badab2e858a878e73",
-  },
   {
     id: "55",
     leader: "202005070112",
@@ -22,6 +17,8 @@ const teamList = ref([
     new: null,
     year: "2022",
     paper: "b82fd89b38d009beec5c72a12ca57db3",
+    score: null,
+    advice: null,
   },
   {
     id: "56",
@@ -32,6 +29,8 @@ const teamList = ref([
     new: "&lt;p&gt;&lt;strong&gt;众所周知，长时间的太空作业对食品与氧气有着极大的需求，当下的解决方案主要是从地球补给食物、水，以及电解水制氧气。太空食品需从地球携带到太空，而载人飞船发射费用昂贵。而水的运输更为不便，当前主要依靠水的循环利用，若在宇航员表皮细胞中转入叶绿体，便可以利用太空中充足的光能资源，一定程度上缓解太空食物，氧气的缺乏。同样的，该技术还可用于地球上相似的环境，转入叶绿体可以提高人类对如高寒缺氧的高原等环境的适应能力，并以此提高军事边防实力乃至未来的太空移民可行度的提高。于牲畜表皮细胞中转入叶绿体，可以降低喂养成本，提高产出，提高畜牧业整体生产效益。&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;动物也进行光合作用，可以有效改善空气质量，缓解现代化过快带来的大气污染。&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;同时，转入叶绿体的生物具有一定观赏性，可以起到美化环境作用。&lt;/strong&gt;&lt;/p&gt;",
     year: "2022",
     paper: "0fc83faa59afb2ac06197818f4e5bc70",
+    score: 0,
+    advice: null,
   },
   {
     id: "60",
@@ -42,6 +41,8 @@ const teamList = ref([
     new: "&lt;p&gt;    PET水解酶的应用受到了限制，因为其对pH和温度范围的狭窄、反应速度慢，所以无法被直接用于降解PET。我们通过全基因合成分别获得了细菌Ideonella sakaiensis201-F6中MHETase酶的编码基因，以及突变后的PETase酶的编码基因，构建了重组基因工程菌E.coli BL21- pET29a-MHETase和E.coli BL21-pET29a-PETase，通过优化诱导时间、诱导温度等因素建立较优的产酶条件。以及利用机器人学习模型（MutCompute）诱导产生的天然酶突变体 FAST-PETase（功能性、活性、稳定和耐受性PETase），实现在常规条件下快速反应。FAST PETase可以潜在地用于快速高效降解嵌入织物中的PET碎片，为从商业聚酯产品中回收PET单体和减少微纤维向环境中的浸出提供了一条潜在途径。&lt;/p&gt;",
     year: "2022",
     paper: "cd8433509fadc49a65abf06a40c8597b",
+    score: null,
+    advice: null,
   },
   {
     id: "61",
@@ -52,6 +53,8 @@ const teamList = ref([
     new: "&lt;p&gt;&lt;strong&gt;该项目通过研究利用mRNA制造新冠疫苗的方法，进行深入了解，并推测出目前还未出现的癌症mRNA疫苗的生产方法。&lt;/strong&gt;&lt;/p&gt;",
     year: "2022",
     paper: "40ace6de498488422e957374218e6ef2",
+    score: null,
+    advice: null,
   },
   {
     id: "70",
@@ -63,6 +66,8 @@ const teamList = ref([
     new: "&lt;p&gt;为在保证产品质量的条件下解决生产成本过高的问题，本小组对生产溶剂进行创新，以水作为提取溶剂，选用水浸法提取银杏双黄酮，实现简化提取工艺,降低生产成本，达到节能、省时、方便的目的。&lt;/p&gt;",
     year: "2022",
     paper: "d989c0e44fcd25f87adae81751d526df",
+    score: null,
+    advice: null,
   },
   {
     id: "71",
@@ -74,6 +79,21 @@ const teamList = ref([
     new: "&lt;p&gt;&lt;strong&gt;敲除CD38基因可以改善血管重塑引起的高血压，具体原理如下： CD38基因表达产物CD38的缺失可以：1.激活细胞的SIRT3-FOXO3信号通路;2.抑制Ca2+-calcineunin-NFATc4通路从而抑制血管紧张素II（AngII）的表达。昂二.能通过活化STAT3增加miR-21的表达，从而下调miR-21靶基因 PTEN 的表达水平，增强 HMEC 的增殖能力，最终引发血管重塑。于是抑制AngII的表达即可抑制血管重塑现象。本研究为未来的高血压等心血管疾病治疗方法研究提供了一种全新的思路。不同于西医或是传统中医对于高血压疾病的药物治疗、调养身体等疗法，本研究创新地将视角放在现代治疗手段上，即使用生物技术对基因进行改变，从而达到减少CD-38的表达，减轻血管重塑造成的影响，以此从根本上来治疗高血压疾病。&lt;/strong&gt;&lt;/p&gt;",
     year: "2022",
     paper: "3914f6a7afe38afd5f101c2b501b0808",
+    score: null,
+    advice: null,
+  },
+  {
+    id: "72",
+    leader: "202205070320",
+    title:
+      "&lt;p&gt;&lt;strong&gt;丝状真菌产孢基因在益生菌中的运用&lt;/strong&gt;&lt;/p&gt;",
+    abstract:
+      "&lt;p&gt;&lt;strong&gt;有丝真菌的孢子繁殖，正是PTKl基因的存在作为其的产孢基因，同时其主要靠的是brlA，abaA和wetA 3个主要基因组的调控作用与一系列其他基因的辅助作用下共同调节形成。在这些知识的思路激发下，我们试图将这些基因引入同属于子囊菌纲下的布拉迪酵母菌（Saccharomyces cerevisiae boulardii ），尝试提高其产量同时能够利于其的储存，使其可以更好的保持活性，因为目前对于该益生菌的保存方法仍以灭活的方式来保存，我们希望能够通过以证实对子囊菌无性产孢有帮助的brlA基因来让其能够更好繁殖运输甚至可能可以让它拥有类似霉菌的性质。我们希望能通过CRISPR/Cas9系统来对此进行定向编辑并通过对比几个组所产生的不同效果来寻找出最贴近最适合的基因组。同时，对于培育后的酵母菌，我们采用ITS序列分析方法分析其在5.8S核糖体RNA基因及内部转录间隔区的变化，与genbank中OP600625.1号基因组序列进行比对来推测这一系列改动对其整个基因序列带来的影响。同时对其性质的改动进行推测，并且检测其在多次繁殖后基因的变化，在这之后对其多次子代进行相似操作，保证其基因稳定后可将该真菌用于实验阶段，检查其作为在儿童相关抗生素腹泻方便的作用与作为益生菌的作用，检查其肠道定植率，在全部检查均合格后可考虑进行量产。&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;",
+    new: "&lt;p&gt;&lt;strong&gt;我们项目是将霉菌与益生菌相结合，同是真菌但是却截然不同的两种东西，我们让它们碰撞出了火花。霉菌孢子繁殖的特性可以让益生菌快速的繁殖生长，同时我们认为也可以极大的增强其生存能力，同时也可以方便其的运输与保存，甚至可以不通过灭活而是保持活性的情况下进行运输与保存，大大减小其的运输成本并提高其在使用时的活性，所以我们查找论文找出了其中可能的基因序列进行实验。目前益生菌活性低，同时肠道定植率低无疑是一大问题，让益生菌获得一部分真菌的性质无疑可以提高其的定制率加强活性，同时大量用于动物草场饲料。同时本次我们使用的是同为子囊菌纲下的酵母菌，若基因编辑实验成功那么将意味着同样作为子囊菌的其它种类益生菌也可以通过类似手法进行基因编辑，将彻底解决目前市面上有关益生菌的相关问题。&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;/p&gt;",
+    year: "2022",
+    paper: "238f007367c715a8b629c3738582a937",
+    score: null,
+    advice: null,
   },
   {
     id: "73",
@@ -84,16 +104,64 @@ const teamList = ref([
     new: "&lt;p&gt;创造性优化了餐厨垃圾回收及制备微生物饲料蛋白这一工程，并设计改良了EM菌剂使其运用到工程中，蛋白转化效率明显提高。&lt;/p&gt;",
     year: "2022",
     paper: "e629ee2f833f9a8c8b76d245a338c6f9",
+    score: null,
+    advice: null,
   },
 ]);
 
+const judgeForm = reactive({
+  team: "",
+  score: 0,
+  advice: "",
+});
+
 const router = useRouter();
-// const teamList = ref([]);
-const currentTeamIndex = ref(0);
+const currentTeam = ref({});
+const canEdit = ref(false);
+
+const tab = ref("projectInfo");
+
+const editable = computed(() => {
+  if (canEdit.value) {
+    return true;
+  }
+  if (currentTeam.value.score !== null) {
+    return false;
+  } else {
+    return true;
+  }
+});
+
+function chooseTeam(team) {
+  currentTeam.value = team;
+  canEdit.value = false;
+  judgeForm.team = team.id;
+  judgeForm.score = team.score ?? 0;
+  judgeForm.advice = transHtml(team.advice ?? "");
+}
+
+function getType(team) {
+  return computed(() => {
+    if (team.id === currentTeam.value.id) {
+      return "primary";
+    } else {
+      return team.score !== null ? "success" : "default";
+    }
+  });
+}
+
+function submit() {
+  judgeProject(judgeForm.team, judgeForm.score, judgeForm.advice, () => {
+    ElMessage.success("评分成功");
+    canEdit.value = true;
+  });
+}
+
 onMounted(() => {
   isLogin(async () => {
     if (["judge", "admin"].includes(useUserStore().role)) {
       teamList.value = await getTeamList("judge");
+      currentTeam.value = teamList.value[0];
       console.log(teamList.value);
     } else {
       router.push("/upload");
@@ -107,28 +175,112 @@ onMounted(() => {
     <el-container>
       <el-main>
         <el-row>
-          <template>
-            <el-col>
-              <el-button
-                :type="{
-                  primary: currentTeamIndex.value === index,
-                }"
-                @click="
-                  () => {
-                    currentTeamIndex.value = 0;
-                  }
-                "
-              >
-                <span
-                  v-html="transHtml(teamList[currentTeamIndex].title)"
-                ></span>
-              </el-button>
-            </el-col>
-          </template>
+          <h2>项目列表</h2>
+          <el-scrollbar>
+            <div class="team-list gap-2">
+              <template v-for="team of teamList" :key="team.id">
+                <el-button
+                  :type="getType(team).value"
+                  @click="chooseTeam(team)"
+                >
+                  <span
+                    v-html="
+                      transHtml(team.title ?? team.id)
+                        .replace('<br>', '')
+                        .replace('<p></p>', '')
+                    "
+                  ></span>
+                </el-button>
+              </template>
+            </div>
+          </el-scrollbar>
         </el-row>
+        <div>
+          <el-tabs v-model="tab" stretch>
+            <el-tab-pane
+              style="height: 100%; width: 100%"
+              label="项目信息"
+              name="projectInfo"
+            >
+              <div class="project-info">
+                <el-descriptions :column="1" direction="horizontal" border>
+                  <el-descriptions-item label="项目标题">
+                    <span
+                      v-html="
+                        transHtml(currentTeam.title ?? '无')
+                          .replace('<br>', '')
+                          .replace('<p></p>', '')
+                      "
+                    ></span>
+                  </el-descriptions-item>
+                  <el-descriptions-item label="项目简介">
+                    <span
+                      v-html="
+                        transHtml(currentTeam.abstract ?? '无')
+                          .replace('<br>', '')
+                          .replace('<p></p>', '')
+                      "
+                    ></span>
+                  </el-descriptions-item>
+                  <el-descriptions-item label="创新之处">
+                    <span
+                      v-html="
+                        transHtml(currentTeam.new ?? '无')
+                          .replace('<br>', '')
+                          .replace('<p></p>', '')
+                      "
+                    ></span>
+                  </el-descriptions-item>
+                </el-descriptions>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane
+              style="height: 100%"
+              label="项目论文"
+              name="projectPaper"
+            >
+              <pdfViewer
+                :file="`../../pdf/${currentTeam.id}/${currentTeam.paper}.pdf`"
+                height="calc(100vh - 100px)"
+              />
+            </el-tab-pane>
+            <el-tab-pane style="height: 100%" label="评分" name="projectScore">
+              <el-form :model="judgeForm" :disabled="!editable">
+                <el-form-item label="得分(100分)" required >
+                  <el-input-number
+                    v-model="judgeForm.score"
+                    :min="0"
+                    :max="100"
+                  />
+                </el-form-item>
+                <el-form-item label="评语">
+                  <editor
+                    v-model:content="judgeForm.advice"
+                    :limit="1000"
+                    :editable="editable"
+                  />
+                </el-form-item>
+              </el-form>
+              <el-button :disabled="!editable" type="primary">提交</el-button>
+              <el-button @click="canEdit = true" type="default"
+                >重新评分</el-button
+              >
+            </el-tab-pane>
+          </el-tabs>
+        </div>
       </el-main>
     </el-container>
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.team-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  .el-button {
+    margin-top: 5px;
+    margin-left: 0;
+  }
+}
+</style>

@@ -231,3 +231,15 @@ export const getTeamList = async (type) => {
         type
     })
 }
+
+export const judgeProject = (team, score, advice, callback) => {
+    request.post("/api/judgeProject.php", {
+        username: useUserStore().username,
+        timestamp: timestamp.value,
+        team,
+        score,
+        advice
+    }).then(() => {
+        callback && typeof callback === "function" ? callback() : null
+    })
+}
