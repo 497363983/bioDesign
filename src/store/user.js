@@ -7,7 +7,7 @@ export const useUserStore = defineStore('user', {
         password: "",
         re_password: "",
         username: "",
-        role: "player",
+        role: "admin",
         team: null,
         token: useStorage('token', null),
         isAuthenticated: false,
