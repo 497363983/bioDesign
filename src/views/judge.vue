@@ -7,10 +7,11 @@ const router = useRouter();
 const teamList = ref([]);
 onMounted(async () => {
   isLogin(async () => {
-    if (["judge","admin"].includes(useUserStore().role)) {
-      router.push("/upload");
+    if (["judge", "admin"].includes(useUserStore().role)) {
       teamList.value = await getTeamList();
       console.log(teamList.value);
+    } else {
+      router.push("/upload");
     }
   });
 });
