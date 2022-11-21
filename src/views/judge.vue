@@ -40,6 +40,7 @@ function chooseTeam(team) {
   judgeForm.team = team.id;
   judgeForm.score = team.score ?? 0;
   judgeForm.advice = transHtml(team.advice ?? "");
+  console.log(judgeForm);
 }
 
 function getType(team) {
@@ -80,6 +81,8 @@ function submit() {
           canEdit.value = true;
           teamList.value = await getTeamList("judge");
           submiting.value = false;
+          currentTeam.value.score = judgeForm.score;
+          currentTeam.value.advice = judgeForm.advice;
         }
       );
     })
@@ -94,6 +97,10 @@ onMounted(() => {
       console.log(teamList.value);
     } else {
       router.push("/upload");
+      ElMessage({
+        type: "error",
+        message: "您没有权限访问该页面",
+      });
     }
   });
 });
@@ -102,6 +109,13 @@ onMounted(() => {
 <template>
   <div>
     <el-container>
+      <el-header>
+        <el-page-header title=" " :icon="null">
+          <template #extra>
+            <el-button type="danger">退出登录</el-button>
+          </template>
+        </el-page-header>
+      </el-header>
       <el-main>
         <el-row>
           <h2>
@@ -110,9 +124,9 @@ onMounted(() => {
             }}
             <el-progress
               :percentage="
-                (teamList.filter((i) => i.score !== null).length /
+                ((teamList.filter((i) => i.score !== null).length /
                   teamList.length) *
-                100
+                100).toFixed(2)
               "
             />
           </h2>
