@@ -153,7 +153,7 @@ onMounted(async () => {
       <el-main>
         <div class="time-counter" style="margin: 30px 0">
           <div class="counter-wrap text-center">
-            <counter :end="useConfigStore().upload.end">
+            <counter v-if="new Date(timestamp) - new Date(useConfigStore().upload.end) < 0" :end="useConfigStore().upload.end">
               <template v-slot="{ day, second, hour, minute, isDanger }">
                 <span style="font-size: 20px"
                   >上传通道预计将于
@@ -169,6 +169,7 @@ onMounted(async () => {
                 >
               </template>
             </counter>
+            <span v-else style="font-size: 20px">上传通道已关闭</span>
           </div>
         </div>
         <el-row>
