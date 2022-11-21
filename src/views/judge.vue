@@ -153,10 +153,10 @@ onMounted(() => {
                 >
                   <span
                     v-html="
-                      transHtml(team.title.replace('&lt;p&gt;&amp;nbsp;&lt;/p&gt;','') ?? team.id)
+                      transHtml(team.title ?? team.id)
                         .replace('<br>', '')
                         .replace('<p></p>', '')
-                        .replace('<p>&nbsp;</p>', '')
+                        .replace('<p> </p>', '')
                     "
                   ></span>
                 </el-button>
