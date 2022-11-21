@@ -66,6 +66,7 @@ function submit() {
       cancelButtonText: "取消",
       showClose: false,
       dangerouslyUseHTMLString: true,
+      appendTo: document.body,
     }
   )
     .then(() => {
