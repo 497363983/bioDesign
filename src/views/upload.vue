@@ -32,12 +32,20 @@ const canUpload = computed(() => {
     const pre = new Date(timestamp.value) - new Date(start);
     const ne = new Date(timestamp.value) - new Date(end);
     return pre >= 0 && ne <= 0;
-    // return pre
   } else {
     return true;
   }
 });
 
+const showCounter = computed(() => {
+  if (useConfigStore().upload.open === "auto") {
+    const start = useConfigStore().upload.start;
+    const pre = new Date(timestamp.value) - new Date(start);
+    return pre < 0;
+  } else {
+    return false;
+  }
+});
 function newTeam(teamRef) {
   ElMessageBox.confirm(`确认创建一支新队伍？`, "提示", {
     confirmButtonText: "确认",
@@ -128,7 +136,7 @@ onMounted(async () => {
   <div
     class="time-counter"
     style="height: calc(100vh - 160px); font-size: 45px"
-    v-if="!canUpload && useUserStore().role !== 'test'"
+    v-if="showCounter"
   >
     <div class="counter-wrap text-center">
       <counter :end="useConfigStore().upload.start">
