@@ -153,7 +153,7 @@ onMounted(() => {
                 >
                   <span
                     v-html="
-                      transHtml(team.title ?? team.id)
+                      transHtml(team.title.replace('&lt;p&gt;&amp;nbsp;&lt;/p&gt;','') ?? team.id)
                         .replace('<br>', '')
                         .replace('<p></p>', '')
                         .replace('<p>&nbsp;</p>', '')
