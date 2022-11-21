@@ -19,7 +19,7 @@ const judgeForm = reactive({
 const router = useRouter();
 const currentTeam = ref({});
 const canEdit = ref(false);
-const submiting = ref(false);
+const submitting = ref(false);
 
 const tab = ref("projectInfo");
 
@@ -69,7 +69,7 @@ function submit() {
     }
   )
     .then(() => {
-      submiting.value = true;
+      submitting.value = true;
       judgeProject(
         judgeForm.team,
         judgeForm.score,
@@ -81,10 +81,10 @@ function submit() {
           });
           canEdit.value = false;
           teamList.value = await getTeamList("judge");
-          submiting.value = false;
+          submitting.value = false;
           currentTeam.value.score = judgeForm.score;
           currentTeam.value.advice = judgeForm.advice;
-          chooseTeam(currentTeam.value);
+          // chooseTeam(currentTeam.value);
         }
       );
     })
@@ -229,7 +229,7 @@ onMounted(() => {
                 </el-form-item>
               </el-form>
               <el-button
-                :loading="submiting"
+                :loading="submitting"
                 @click="submit"
                 :disabled="!editable"
                 type="primary"
