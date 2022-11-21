@@ -8,10 +8,8 @@ import pdfViewer from "../components/pdf-viewer/index.vue";
 import editor from "../components/editor/index.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 
-// 
-
-
 const teamList = ref([]);
+
 const judgeForm = reactive({
   team: "",
   score: 0,
@@ -21,6 +19,7 @@ const judgeForm = reactive({
 const router = useRouter();
 const currentTeam = ref({});
 const canEdit = ref(false);
+const submiting = ref(false);
 
 const tab = ref("projectInfo");
 
@@ -54,10 +53,37 @@ function getType(team) {
 }
 
 function submit() {
-  judgeProject(judgeForm.team, judgeForm.score, judgeForm.advice, () => {
-    ElMessage.success("评分成功");
-    canEdit.value = true;
-  });
+  ElMessageBox.confirm(
+    `确认评定项目${transHtml(currentTeam.value.title).replace(
+      "<br>",
+      ""
+    )} 得分为 ${judgeForm.score} 分？`,
+    "提示",
+    {
+      confirmButtonText: "确认",
+      cancelButtonText: "取消",
+      showClose: false,
+      dangerouslyUseHTMLString: true,
+    }
+  )
+    .then(() => {
+      submiting.value = true;
+      judgeProject(
+        judgeForm.team,
+        judgeForm.score,
+        judgeForm.advice,
+        async () => {
+          ElMessage({
+            type: "success",
+            message: "评分成功",
+          });
+          canEdit.value = true;
+          teamList.value = await getTeamList("judge");
+          submiting.value = false;
+        }
+      );
+    })
+    .catch(() => {});
 }
 
 onMounted(() => {
@@ -78,7 +104,19 @@ onMounted(() => {
     <el-container>
       <el-main>
         <el-row>
-          <h2>项目列表</h2>
+          <h2>
+            项目列表 {{ teamList.filter((i) => i.score !== null).length }}/{{
+              teamList.length
+            }}
+            <el-progress
+              :percentage="
+                (teamList.filter((i) => i.score !== null).length /
+                  teamList.length) *
+                100
+              "
+            />
+          </h2>
+
           <el-scrollbar>
             <div class="team-list gap-2">
               <template v-for="team of teamList" :key="team.id">
@@ -149,7 +187,7 @@ onMounted(() => {
             </el-tab-pane>
             <el-tab-pane style="height: 100%" label="评分" name="projectScore">
               <el-form :model="judgeForm" :disabled="!editable">
-                <el-form-item label="得分(100分)" required >
+                <el-form-item label="得分(100分)" required>
                   <el-input-number
                     v-model="judgeForm.score"
                     :min="0"
@@ -164,7 +202,13 @@ onMounted(() => {
                   />
                 </el-form-item>
               </el-form>
-              <el-button :disabled="!editable" type="primary">提交</el-button>
+              <el-button
+                :loading="submiting"
+                @click="submit"
+                :disabled="!editable"
+                type="primary"
+                >提交</el-button
+              >
               <el-button @click="canEdit = true" type="default"
                 >重新评分</el-button
               >
@@ -185,5 +229,10 @@ onMounted(() => {
     margin-top: 5px;
     margin-left: 0;
   }
+}
+
+.el-progress--line {
+  margin-bottom: 15px;
+  width: 350px;
 }
 </style>
