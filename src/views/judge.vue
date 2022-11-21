@@ -79,11 +79,12 @@ function submit() {
             type: "success",
             message: "评分成功",
           });
-          canEdit.value = true;
+          canEdit.value = false;
           teamList.value = await getTeamList("judge");
           submiting.value = false;
           currentTeam.value.score = judgeForm.score;
           currentTeam.value.advice = judgeForm.advice;
+          chooseTeam(currentTeam.value);
         }
       );
     })
