@@ -36,7 +36,10 @@ async function onLogin(formRef) {
           console.log(useUserStore().isAuthenticated, useUserStore().role);
           router.back();
         } else {
-          router.push("/upload");
+          ElMessage({
+            type: "error",
+            message: "登录失败",
+          });
         }
         loginLoading.value = false;
       });

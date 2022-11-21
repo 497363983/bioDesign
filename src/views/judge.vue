@@ -1,8 +1,8 @@
 <script setup>
 import { isLogin, getTeamList, judgeProject } from "../api";
 import { useRouter } from "vue-router";
-import { useUserStore } from "../store";
-import { transHtml } from "../utils";
+import { useUserStore, useTeamStore } from "../store";
+import { transHtml, username, token } from "../utils";
 import { computed, reactive } from "vue";
 import pdfViewer from "../components/pdf-viewer/index.vue";
 import editor from "../components/editor/index.vue";
@@ -40,6 +40,7 @@ function chooseTeam(team) {
   judgeForm.team = team.id;
   judgeForm.score = team.score ?? 0;
   judgeForm.advice = transHtml(team.advice ?? "");
+  tab.value = "projectInfo";
   console.log(judgeForm);
 }
 
@@ -88,6 +89,13 @@ function submit() {
     })
     .catch(() => {});
 }
+function logout() {
+  useUserStore().$reset();
+  useTeamStore().$reset();
+  token.value = null;
+  username.value = null;
+  router.push("/login");
+}
 
 onMounted(() => {
   isLogin(async () => {
@@ -112,11 +120,12 @@ onMounted(() => {
       <el-header>
         <el-page-header title=" " :icon="null">
           <template #extra>
-            <el-button type="danger">退出登录</el-button>
+            {{ useUserStore().name }}老师
+            <el-button @click="logout" type="danger">退出登录</el-button>
           </template>
         </el-page-header>
       </el-header>
-      <el-main>
+      <el-main style="padding-top: 0">
         <el-row>
           <h2>
             项目列表 {{ teamList.filter((i) => i.score !== null).length }}/{{
@@ -124,9 +133,11 @@ onMounted(() => {
             }}
             <el-progress
               :percentage="
-                ((teamList.filter((i) => i.score !== null).length /
-                  teamList.length) *
-                100).toFixed(2)
+                (
+                  (teamList.filter((i) => i.score !== null).length /
+                    teamList.length) *
+                  100
+                ).toFixed(2)
               "
             />
           </h2>
@@ -223,7 +234,10 @@ onMounted(() => {
                 type="primary"
                 >提交</el-button
               >
-              <el-button @click="canEdit = true" type="default"
+              <el-button
+                v-show="!editable"
+                @click="canEdit = true"
+                type="default"
                 >重新评分</el-button
               >
             </el-tab-pane>
