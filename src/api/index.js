@@ -243,3 +243,5 @@ export const judgeProject = (team, score, advice, callback) => {
         callback && typeof callback === "function" ? callback() : null
     })
 }
+
+export const getResult = () => request.get("/api/getResult.php");

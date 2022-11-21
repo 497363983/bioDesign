@@ -38,3 +38,7 @@ html {
 .gap-4 {
   gap: 1rem;
 }
+
+li p{
+  margin: 0;
+}
