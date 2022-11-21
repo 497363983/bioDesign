@@ -156,6 +156,7 @@ onMounted(() => {
                       transHtml(team.title ?? team.id)
                         .replace('<br>', '')
                         .replace('<p></p>', '')
+                        .replace('<p>&nbsp;</p>', '')
                     "
                   ></span>
                 </el-button>
