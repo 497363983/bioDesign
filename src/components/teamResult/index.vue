@@ -74,7 +74,7 @@ onMounted(() => {
     <template #header>
       <div class="card-header">
         <span>队伍结果</span>
-        <div>
+        <div v-if="useUserStore().isAuthenticated">
           <el-button type="danger" text @click="logout">退出登录</el-button>
         </div>
       </div>
