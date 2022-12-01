@@ -53,6 +53,7 @@ onMounted(() => {
   if (username.value && token.value) {
     isLogin(async (res) => {
       if (res) {
+        getTeamInformation(useUserStore().team);
         advice.value = await getTeamAdvice();
       }
     });
