@@ -12,10 +12,7 @@ const contentHeight = computed(() => height - 60);
 
 onMounted(() => {
   if (token.value && username.value) {
-    isLogin(() => {
-      console.log("local", token.value, username.value);
-      console.log("user", useUserStore());
-    });
+    isLogin();
   }
 });
 </script>

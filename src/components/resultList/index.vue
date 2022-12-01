@@ -11,7 +11,6 @@ const showProject = ref(false);
 function chooseProject(row) {
   currentProject.value = row;
   showProject.value = true;
-  console.log(currentProject.value);
 }
 
 const rowType = (rowIndex) =>
@@ -44,7 +43,6 @@ const prize = (rowIndex) =>
 
 onMounted(async () => {
   result.value = await getResult();
-  console.log(result.value);
 });
 
 defineExpose({

@@ -33,7 +33,6 @@ async function onLogin(formRef) {
     if (valid) {
       login(() => {
         if (useUserStore().isAuthenticated) {
-          console.log(useUserStore().isAuthenticated, useUserStore().role);
           router.back();
         } else {
           ElMessage({

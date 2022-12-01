@@ -56,7 +56,10 @@ function uploadSuccess(response) {
 }
 
 function uploadFailure(err, file) {
-  console.log(err);
+  ElMessage({
+    type: "error",
+    message: "文件上传失败",
+  });
 }
 </script>
 

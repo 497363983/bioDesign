@@ -65,7 +65,6 @@ const router = createRouter({
 
 router.afterEach((to, from, failure) => {
     if (!failure) {
-        console.log(to)
         title.value = `${to.meta.name} | 生物创新设计大赛`
     }
 })

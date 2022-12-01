@@ -34,7 +34,6 @@ export const login = async (callback) => {
         password: MD5(useUserStore().password).toString(),
         timestamp: timestamp.value
     }).then(res => {
-        console.log(res)
         if (res) {
             username.value = res.username;
             token.value = res.token;
@@ -68,7 +67,6 @@ export const isLogin = (success, failure) => {
         username: username.value,
         timestamp: timestamp.value
     }).then(res => {
-        console.log('isLogin', res)
         if (res) {
             token.value = res.token;
             useUserStore().username = username.value;

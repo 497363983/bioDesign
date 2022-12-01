@@ -82,9 +82,7 @@ defineExpose({
 });
 
 onMounted(() => {
-  getTeamInformation(useUserStore().team, () => {
-    console.log(useTeamStore());
-  });
+  getTeamInformation(useUserStore().team);
 });
 </script>
 

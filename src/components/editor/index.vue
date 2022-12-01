@@ -84,16 +84,12 @@ watch(
 watch(
   () => props.editable,
   (newValue) => {
-    console.log(newValue);
     editor.value.setOptions({
       editable: newValue ?? false,
     });
   }
 );
 
-onMounted(() => {
-  console.log(editor);
-});
 </script>
 
 <template>
