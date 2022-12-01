@@ -25,7 +25,7 @@ const resultListRef = ref();
     </div>
     <div class="flex">
       <teamResult :result="resultListRef?.result || []" />
-      <resultList v-if="useUserStore().role === 'test'" ref="resultListRef" />
+      <resultList ref="resultListRef" />
     </div>
   </div>
 </template>

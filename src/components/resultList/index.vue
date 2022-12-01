@@ -5,6 +5,14 @@ import { transHtml } from "@/utils";
 import { useConfigStore } from "@/store";
 
 const result = ref([]);
+const currentProject = ref({});
+const showProject = ref(false);
+
+function chooseProject(row) {
+  currentProject.value = row;
+  showProject.value = true;
+  console.log(currentProject.value);
+}
 
 const rowType = (rowIndex) =>
   computed(() => {
@@ -46,7 +54,7 @@ defineExpose({
 
 <template>
   <div class="result-list" style="width: 100%">
-    <el-table :data="result" :table-layout="'fixed'">
+    <el-table :data="result" :table-layout="'fixed'" @row-click="chooseProject">
       <el-table-column
         type="index"
         label="排名"
@@ -67,15 +75,52 @@ defineExpose({
           </strong>
         </template>
       </el-table-column>
+      <el-table-column
+        header-align="center"
+        align="center"
+        prop="leader"
+        label="负责人" >
+      </el-table-column>
       <el-table-column header-align="center" align="center" label="结果">
         <template #default="{ $index }">
-          <el-tag effect="plain" :type="rowType($index).value">{{
+          <el-tag effect="plain" :type="rowType($index).value" size="large">{{
             prize($index).value
           }}</el-tag>
         </template>
       </el-table-column>
     </el-table>
   </div>
+  <el-dialog v-model="showProject" fullscreen>
+    <div>
+      <el-descriptions :column="1" border>
+        <el-descriptions-item label="项目名称">
+          <strong>
+            <span
+              v-html="
+                transHtml(currentProject.title)
+                  .replace('<br>', '')
+                  .match(/(?<=<p>).*?(?=<\/p>)/g)
+              "
+            ></span>
+          </strong>
+        </el-descriptions-item>
+        <el-descriptions-item label="负责人">
+          {{ currentProject.leader }}
+        </el-descriptions-item>
+        <el-descriptions-item label="结果">
+          <el-tag effect="plain" :type="rowType(result.indexOf(currentProject)).value" size="large">{{
+            prize(result.indexOf(currentProject)).value
+          }}</el-tag>
+        </el-descriptions-item>
+        <el-descriptions-item label="项目简介">
+          <span v-html="transHtml(currentProject.abstract)"></span>
+        </el-descriptions-item>
+        <el-descriptions-item label="创新之处">
+          <span v-html="transHtml(currentProject.new)"></span>
+        </el-descriptions-item>
+      </el-descriptions>
+    </div>
+  </el-dialog>
 </template>
 
 <style lang="scss">

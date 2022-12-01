@@ -54,7 +54,7 @@ onMounted(() => {
     isLogin(async (res) => {
       if (res) {
         getTeamInformation(useUserStore().team);
-        advice.value = (await getTeamAdvice()).filter(item => item);
+        advice.value = (await getTeamAdvice()).filter((item) => item);
       }
     });
   }
@@ -71,13 +71,19 @@ onMounted(() => {
         >登录</el-button
       >
     </div>
+    <div
+      v-else-if="
+        result.filter((i) => i.team === useUserStore().team).length === 0"
+    >
+      本次比赛您没有参赛队伍
+    </div>
     <div v-else>
       <el-descriptions>
         <el-descriptions-item label="项目名称">
           <strong>
             <span
               v-html="
-                transHtml(useTeamStore().title)
+                transHtml(result[index].title)
                   .replace('<br>', '')
                   .match(/(?<=<p>).*?(?=<\/p>)/g)
               "
@@ -85,22 +91,18 @@ onMounted(() => {
           </strong>
         </el-descriptions-item>
         <el-descriptions-item label="负责人">
-          {{
-            useTeamStore().member.find(
-              (item) => item.username === useTeamStore().leader
-            )?.name
-          }}
+          {{ result[index].leader }}
         </el-descriptions-item>
         <el-descriptions-item label="结果">
-          <el-tag effect="plain" :type="rowType(index).value">{{
+          <el-tag effect="plain" :type="rowType(index).value" size="large">{{
             prize(index).value
           }}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item label="评委评语">
           <span v-if="advice.length === 0">无</span>
           <ul>
-            <li v-for="(item, index) of advice" :key="index">
-              <strong>评委{{ index + 1 }}</strong>
+            <li v-for="(item, idx) of advice" :key="idx">
+              <strong>评委{{ idx + 1 }}</strong>
               <div v-html="transHtml(item)"></div>
             </li>
           </ul>
