@@ -246,7 +246,7 @@ export const judgeProject = (team, score, advice, callback) => {
 
 export const getResult = () => request.get("/api/getResult.php");
 
-export const getTeamAdvice = (id) => request.post("/api/getTeamResult.php", {
+export const getTeamAdvice = (id) => request.post("/api/getTeamAdvice.php", {
     team: id,
     username: useUserStore().username,
     timestamp: timestamp.value
