@@ -10,7 +10,10 @@ export const useConfigStore = defineStore('config', {
         result: {
             start: "",
             end: "",
-            open: false
+            open: false,
+            promotion: 0,
+            thirdPrize: 0,
+            encouragement: 0
         },
         competition: {
             start: "",

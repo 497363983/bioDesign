@@ -1,7 +1,11 @@
 <script setup>
 // import particleBackground from "@/components/particle-background/index.vue";
 import counter from "@/components/counter/index.vue";
-import { useConfigStore } from "../store";
+import { useConfigStore, useUserStore } from "../store";
+import resultList from "@/components/resultList/index.vue";
+import teamResult from "@/components/teamResult/index.vue";
+import { onMounted, ref, computed } from "vue";
+const resultListRef = ref();
 </script>
 
 <template>
@@ -9,7 +13,7 @@ import { useConfigStore } from "../store";
     <!-- <particleBackground/> -->
     <div class="flex" style="height: 300px">
       <div class="header">第七届生物创新设计大赛</div>
-      <div class="counter-wrap">
+      <!-- <div class="counter-wrap">
         <counter :end="useConfigStore().competition.start">
           <template v-slot="{ day, second, hour, minute }">
             <span class="info-text">将于</span>
@@ -17,14 +21,11 @@ import { useConfigStore } from "../store";
             <span class="info-text">后开始</span>
           </template>
         </counter>
-      </div>
+      </div> -->
     </div>
     <div class="flex">
-      <el-alert type="info" :closable="false">
-        <div style="font-size: 30px; text-align: center; font-weight: 700">
-          当前页面正在开发中
-        </div>
-      </el-alert>
+      <teamResult :result="resultListRef.result" />
+      <resultList v-if="useUserStore().role === 'test'" ref="resultListRef" />
     </div>
   </div>
 </template>
