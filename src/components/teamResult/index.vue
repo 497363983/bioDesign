@@ -100,7 +100,7 @@ onMounted(() => {
           <span v-if="advice.length === 0">无</span>
           <ul>
             <li v-for="(item, index) of advice" :key="index">
-              评委{{ index + 1 }}
+              <strong>评委{{ index + 1 }}</strong>
               <div v-html="transHtml(item)"></div>
             </li>
           </ul>
