@@ -49,6 +49,14 @@ const prize = (rowIndex) =>
     }
   });
 
+function logout() {
+  useUserStore().$reset();
+  useTeamStore().$reset();
+  token.value = null;
+  username.value = null;
+  router.push("/login");
+}
+
 onMounted(() => {
   if (username.value && token.value) {
     isLogin(async (res) => {
@@ -63,7 +71,14 @@ onMounted(() => {
 
 <template>
   <el-card shadow="hover" style="width: 100%">
-    <template #header> 队伍结果 </template>
+    <template #header>
+      <div class="card-header">
+        <span>队伍结果</span>
+        <div>
+          <el-button type="danger" text @click="logout">退出登录</el-button>
+        </div>
+      </div>
+    </template>
     <div v-if="!useUserStore().isAuthenticated">
       登录后查看队伍的参赛结果（包含评委评语）<el-button
         type="primary"
@@ -73,7 +88,8 @@ onMounted(() => {
     </div>
     <div
       v-else-if="
-        result.filter((i) => i.team === useUserStore().team).length === 0"
+        result.filter((i) => i.team === useUserStore().team).length === 0
+      "
     >
       本次比赛您没有参赛队伍
     </div>
@@ -112,4 +128,11 @@ onMounted(() => {
   </el-card>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+</style>
