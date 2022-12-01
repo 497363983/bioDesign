@@ -54,7 +54,7 @@ onMounted(() => {
     isLogin(async (res) => {
       if (res) {
         getTeamInformation(useUserStore().team);
-        advice.value = await getTeamAdvice();
+        advice.value = (await getTeamAdvice()).filter(item => item);
       }
     });
   }
