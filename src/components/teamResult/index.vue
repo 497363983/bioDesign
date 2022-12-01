@@ -99,9 +99,10 @@ onMounted(() => {
         <el-descriptions-item label="评委评语">
           <span v-if="advice.length === 0">无</span>
           <ul>
-            <template v-for="item in advice">
-              <li v-html="transHtml(item)"></li>
-            </template>
+            <li v-for="(item, index) of advice" :key="index">
+              评委{{ index + 1 }}
+              <div v-html="transHtml(item)"></div>
+            </li>
           </ul>
         </el-descriptions-item>
       </el-descriptions>
