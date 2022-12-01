@@ -88,7 +88,7 @@ onMounted(() => {
           {{
             useTeamStore().member.find(
               (item) => item.username === useTeamStore().leader
-            )?.[0]?.name
+            )?.name
           }}
         </el-descriptions-item>
         <el-descriptions-item label="结果">
