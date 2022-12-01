@@ -3,7 +3,7 @@ import { useUserStore, useTeamStore, useConfigStore } from "../../store";
 import { useRouter } from "vue-router";
 import { transHtml, username, token } from "../../utils";
 import { onMounted, ref } from "vue";
-import { isLogin, getTeamAdvice } from "../../api";
+import { isLogin, getTeamAdvice, getTeamInformation } from "../../api";
 
 const props = defineProps({
   result: {
